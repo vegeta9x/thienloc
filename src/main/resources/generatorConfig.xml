@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+  PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+  "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+
+<generatorConfiguration>
+  <!-- <classPathEntry location="/Users/vanlong/Downloads/postgresql-42.2.5.jar"/> -->
+
+  <context id="DB2Tables" targetRuntime="MyBatis3">
+    <jdbcConnection driverClass="org.postgresql.Driver"
+        connectionURL="jdbc:postgresql://localhost:5432/postgres"
+        userId="postgres"
+        password="test">
+    </jdbcConnection>
+
+    <javaTypeResolver >
+      <property name="forceBigDecimals" value="false" />
+    </javaTypeResolver>
+
+    <javaModelGenerator targetPackage="com.thienloc.model" targetProject="thienloc_v2">
+    </javaModelGenerator>
+
+    <sqlMapGenerator targetPackage="com.thienloc.mapper.sql"  targetProject="thienloc_v2/src/main/resources">
+    </sqlMapGenerator>
+
+    <javaClientGenerator type="XMLMAPPER" targetPackage="com.thienloc.mapper"  targetProject="thienloc_v2">
+    </javaClientGenerator>
+
+    <!-- <table tableName="categories" domainObjectName="Categories" ></table>
+    <table tableName="order_details" domainObjectName="OrderDetails" ></table>
+    <table tableName="orders" domainObjectName="Orders" ></table> -->
+    <table tableName="order_detail" domainObjectName="OrderDetail" ></table>
+
+  </context>
+</generatorConfiguration>

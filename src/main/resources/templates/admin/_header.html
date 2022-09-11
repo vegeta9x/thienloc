@@ -1,0 +1,25 @@
+<header class="header">
+    <div class="header__top">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-md-8">
+                    <div class="header__top__left">
+                        <ul>
+                        	<li><a th:href="@{/admin/thienloc}"><i class="fa fa-home" aria-hidden="true"></i> Trang chủ</a></li>
+                            <li><a th:href="@{/admin/categoryList}">Quản lý danh mục</a></li>
+                            <li><a th:href="@{/admin/productList}">Quản lý sản phẩm</a></li>
+                            <li><a th:href="@{/admin/blogList}">Quản lý bài viết</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-4">
+                    <div class="header__top__right">
+                        <div class="header__top__right__social">
+                            <a th:href="@{/admin/logout}"><i class="fa fa-sign-out" style="color: #252525;"></i> Logout</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>

@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+	    <meta charset="UTF-8">
+	    <meta name="description" content="Thiên Lộc pharmacy">
+	    <meta name="keywords" content="thien loc, thiên lộc, Thiên Lộc pharmacy">
+	    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+	    <title>Thiên Lộc pharmacy</title>
+	
+	    <!-- Google Font -->
+	    <!-- <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;600;900&display=swap" rel="stylesheet"> -->
+	
+	    <!-- Css Styles -->
+	    <link rel="stylesheet" href="../css/bootstrap.min.css" type="text/css">
+	    <link rel="stylesheet" href="../css/font-awesome.min.css" type="text/css">
+	    <link rel="stylesheet" href="../css/jquery-ui.min.css" type="text/css">
+	    <link rel="stylesheet" href="../css/style.css" type="text/css">
+	    <style>
+			.header__top a {
+		      	color: #007bff;
+		      	font-size: 16px;
+		    }
+		    .admin__input a {
+				color: #007bff;
+			}
+		    input {
+				flex: none;
+				margin-bottom: 10px;
+			}
+	    </style>	    
+	</head>
+	
+	<body>
+	    <div class="container">
+	    	<th:block th:include="/admin/_header"></th:block>
+	        <div class="admin__form">
+	            
+	                <div class="row">
+				        <div class="col-12">
+				            <div class="section-title__admin">
+				                <h4>Thêm hình ảnh</h4>
+				            </div>
+				        </div>
+			        </div>
+	                <div class="row">
+	                    <div class="col-lg-12">
+	                        <div class="admin__input">
+	                            <table class="table table-hover">
+									  <thead>
+									    <tr>
+									      <th scope="col" style="width: 5%;">#</th>
+									      <th scope="col" style="width: 50%;">Hình ảnh</th>
+									      <th scope="col" style="width: 25%;">Thể loại</th>
+									      <th scope="col" style="width: 20%;">Tác vụ</th>
+									    </tr>
+									  </thead>
+									  <tbody>
+									  	<tr th:if="${product.imageName}">
+									  		<th scope="row">1</th>
+									  		<td>
+									  			<img th:src="@{|../images/category/${product.imageName}|}" class="rounded" width="20%">
+									  		</td>
+									  		<td class="imageType">Ảnh đại diện</td>
+									  		<td>
+									  		</td>
+									  	</tr>
+									  	<tr th:each="imageProduct,iterStat : ${imageProductList}">
+									  		<th th:text="${iterStat.count} + 1" scope="row">1</th>
+									  		<td>
+									  			<img th:src="@{|../images/category/${imageProduct.Name}|}" class="rounded" width="20%">
+									  		</td>
+									  		<td class="imageType">Ảnh chi tiết</td>
+									  		<td>
+										      	<a th:href="@{|/admin/deleteImageProduct?productId=${imageProduct.productId}&imageId=${imageProduct.imageId}|}" class="delete"><i class="fa fa-trash"></i> xoá</a>
+									  		</td>
+									  	</tr>
+									  	<tr th:if="${#lists.isEmpty(imageProductList)}"><td colspan="4">Không có dữ liệu</td></tr>
+									  </tbody>
+	                            </table>
+	                        </div>
+	                        <form th:object="${imageProductForm}" method="POST" th:action="@{/admin/imageProduct}" enctype="multipart/form-data">
+		                        <input th:field="*{productId}" hidden class="productId" >
+		                        <input th:field="*{categoryId}" hidden class="categoryId" >
+		                        
+		                        <div class="admin__input">
+		                            <p>Ảnh đại diện <span>Lưu ý: ảnh đại diện sẽ bị ghi đè</span></p>
+		                            <input th:field="*{thumbnail}" type="file" class="form-control" >
+		                        </div>
+		                        <div class="admin__input imageDetail">
+		                            <p>Ảnh chi tiết</p>
+		                            <input th:field="*{fileDatas}" type="file" class="form-control" >
+		                            <input th:field="*{fileDatas}" type="file" class="form-control" >
+		                            <input th:field="*{fileDatas}" type="file" class="form-control" >
+		                        </div>
+		                        <button type="button" class="btn btn-primary add-input">Thêm tệp</button>
+		                        <div class="admin__button_area" style="margin: 50px 0px;">
+		                            <button class="btn btn-secondary back-btn" type="button">Quay lại</button>
+		                            <button class="btn btn-primary add-blog-btn" value="Upload" type="submit" style="float: right;">Upload</button>
+		                        </div>
+	                        </form>
+	                    </div>
+	                </div>
+	            
+	        </div>
+	    </div>
+		
+		<!-- Js Plugins -->
+		<script src="../js/jquery-3.3.1.min.js"></script>
+		<script src="../js/bootstrap.min.js"></script>
+		<script src="../js/jquery-ui.min.js"></script>
+		
+	    <script>
+		    $(document).ready(function() {
+				
+				$('.add-input').click(function() {
+					$('.imageDetail').append("<input th:field='*{fileDatas}' type='file' class='form-control'>");
+				});
+			
+	            $('.back-btn').click(function() {
+			       if(confirm("Sẽ mất hết nội dung bạn đã nhập. Bạn có muốn quay lại ?"))
+			            history.go(-1);
+			        return false;
+			    });
+			    $('.delete').click(function() {
+			       if(confirm("Bạn có chắc chắn muốn xoá ?"))
+			        {
+			            return true;
+			        }        
+			        return false;
+			    });
+		    });
+		</script>
+		
+	</body>
+</html>

@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="Thiên Lộc pharmacy">
+    <meta name="keywords" content="thien loc, thiên lộc, Thiên Lộc pharmacy">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title th:text="${product.productName}"></title>
+
+    <!-- Google Font -->
+    <!-- <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;600;900&display=swap" rel="stylesheet"> -->
+
+    <!-- Css Styles -->
+    <link rel="stylesheet" href="../css/bootstrap.min.css" type="text/css">
+    <link rel="stylesheet" href="../css/font-awesome.min.css" type="text/css">
+    <link rel="stylesheet" href="../css/elegant-icons.css" type="text/css">
+    <link rel="stylesheet" href="../css/owl.carousel.min.css" type="text/css">
+    <link rel="stylesheet" href="../css/slicknav.min.css" type="text/css">
+    <link rel="stylesheet" href="../css/style.css" type="text/css">
+</head>
+
+<body>
+	<th:block th:include="/_header"></th:block>
+
+    <!-- Breadcrumb Section Begin -->
+    <section class="breadcrumb-section set-bg" data-setbg="../images/banner/breadcrumb.jpg">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <div class="breadcrumb__text">
+                        <h3 th:text="${product.productName}"></h3>
+                        <div class="breadcrumb__option">
+                            <a href="/">Trang chủ</a> &nbsp;ー&nbsp;
+                            <a th:href="@{|/category/${categoryParent.categoryCode}-${categoryParent.categoryId}|}" th:text="${categoryParent.categoryName}"></a> &nbsp;ー&nbsp;
+                            <a th:href="@{|/category/${category.categoryCode}-${category.categoryId}|}" th:text="${category.categoryName}"></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Breadcrumb Section End -->
+
+    <!-- Product Details Section Begin -->
+    <section class="product-details spad">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6 col-md-6">
+                    <div class="product__details__pic">
+                    	<span style="display: none;" class="imageProductListSize" th:text="${#lists.size(imageProductList)}"></span>
+                        <div class="product__details__pic__item">
+                            <img class="product__details__pic__item--large" th:src="@{|../images/category/${product.imageName}|}" alt="">
+                        </div>
+						<div class="product__details__pic__slider owl-carousel">
+							<img th:attr="data-imgbigurl=@{|../images/category/${product.imageName}|}" th:src="@{|../images/category/${product.imageName}|}" alt="">
+							<th:block th:each="imageProduct : ${imageProductList}">
+	                            <img th:attr="data-imgbigurl=@{|../images/category/${imageProduct.Name}|}" th:src="@{|../images/category/${imageProduct.Name}|}" alt="">
+							</th:block>
+						</div>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-6">
+                    <div class="product__details__text">
+                        <input th:field="${product.productId}" class="product__details__id" hidden>
+                        <a th:href="@{|../images/category/${product.imageName}|}" class="product__details__image" style="display: none;"></a>
+                        <input th:field="${product.promotionFlag}" class="product__details__promotionFlag" hidden>
+                        <h3 th:text="${product.productName}" class="product__details__name"></h3>
+                        <span th:text="${product.promotionPrice}" class="product__details__promotionPrice"></span>
+                        <span th:text="${product.price}" class="product__details__price"></span>
+                        <p class="product__details__brand">Thương hiệu: <a th:href="@{|/brand/${product.brand}|}" th:text="${product.brand}"></a></p>
+                        <p th:text="${product.description}" class="description_hide" style="display: none;"></p>
+                        <p class="description"></p>
+                        <div class="product__details__quantity">
+                            <div class="quantity">
+                                <div class="pro-qty">
+                                    <input type="text" readonly value="1">
+                                </div>
+                            </div>
+                        </div>
+                        <a class="primary-btn">Thêm vào giỏ hàng</a>
+                        <div id="snackbar" class=""><span><i class="fa fa-check"></i> Thêm sản phẩm thành công</span></div>
+                    </div>
+                </div>
+                <div class="col-lg-12">
+                    <div class="product__details__tab">
+                        <ul class="nav nav-tabs" role="tablist" style="justify-content: center; border-top: 1px solid #ebebeb; padding-top: 40px; margin-top: 50px;">
+                            <li class="nav-item">
+                                <a class="nav-link active" data-toggle="tab" href="#detail" role="tab" aria-selected="true">Mô tả</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" data-toggle="tab" href="#info" role="tab" aria-selected="false">Thông tin sản phẩm</a>
+                            </li>
+                        </ul>
+                        <div class="tab-content">
+                            <div class="tab-pane active" id="detail" role="tabpanel">
+                                <div class="product__details__tab__desc">
+                                	<p th:text="${product.detail}" class="detail_hide" style="display: none;"></p>
+                        			<p class="detail"></p>
+                                </div>
+                            </div>
+                            <div class="tab-pane" id="info" role="tabpanel">
+                                <div class="product__details__tab__desc">
+									<p th:text="${product.info}" class="info_hide" style="display: none;"></p>
+                        			<p class="info"></p>                                    
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Product Details Section End -->
+
+    <!-- Related Product Section Begin -->
+    <section class="related-product">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="section-title related__product__title">
+                        <h2>Sản phẩm liên quan</h2>
+                    </div>
+                </div>
+            </div>
+            <div class="row featured__filter">
+                <div th:each="relatedProduct,iterStat : ${relatedProductList}" class="col-lg-3 col-md-4 col-6">
+                    <div class="featured__item">
+                        <a th:href="@{|/product-details/${relatedProduct.productCode}-${relatedProduct.productId}|}">
+                            <div class="featured__item__pic set-bg" th:attr="data-setbg=@{|../images/category/${relatedProduct.imageName}|}"></div>
+                        </a>
+                        <div class="featured__item__text">
+                        	<span th:text="${relatedProduct.productId}" class="productItem_Id" style="display: none;"></span>
+                            <h6 class="productItem_name"><a th:text="${relatedProduct.productName}" th:href="@{|/product-details/${relatedProduct.productCode}-${relatedProduct.productId}|}"></a></h6>
+                            <span th:text="${relatedProduct.promotionFlag}" class="productItem_promotionFlag" style="display: none;"></span>
+                            <span th:if="${relatedProduct.promotionFlag} == 1" th:text="${relatedProduct.promotionPrice}" class="productItem_promotionPrice"></span>
+                            <span th:text="${relatedProduct.price}" class="productItem_price"></span>
+                            <div class="featured__item__pic__hover" style="bottom: 0px">
+                                <a class="productItem_to_cart"><i class="fa fa-shopping-cart"></i> Thêm vào giỏ hàng</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Related Product Section End -->
+
+    <th:block th:include="/_footer"></th:block>
+
+    <!-- Js Plugins -->
+    <script src="../js/jquery-3.3.1.min.js"></script>
+    <script src="../js/bootstrap.min.js"></script>
+    <script src="../js/jquery.nice-select.min.js"></script>
+    <script src="../js/jquery-ui.min.js"></script>
+    <script src="../js/jquery.slicknav.js"></script>
+    <script src="../js/mixitup.min.js"></script>
+    <script src="../js/owl.carousel.min.js"></script>
+    <script src="../js/main.js"></script>
+    <script src="../js/save-data.js"></script>
+    <script>
+		$(document).ready(function() {
+			var description_content = $('.description_hide').text();
+	       	$('.description').html(description_content.replace('&lt;', '<').replace('&gt;', '>'));
+	       	$('.description_hide').remove();
+	       	
+	       	var detail_content = $('.detail_hide').text();
+	       	$('.detail').html(detail_content.replace('&lt;', '<').replace('&gt;', '>'));
+	       	$('.detail_hide').remove();
+	       	
+	       	var info_content = $('.info_hide').text();
+	       	$('.info').html(info_content.replace('&lt;', '<').replace('&gt;', '>'));
+	       	$('.info_hide').remove();
+		});
+	</script>
+
+</body>
+
+</html>

@@ -1,0 +1,146 @@
+
+<!-- Page Preloder -->
+<div id="preloder">
+    <div class="loader"></div>
+</div>
+
+<!-- Humberger Begin -->
+<div class="humberger__menu__overlay"></div>
+<div class="humberger__menu__wrapper">
+    <div class="humberger__menu__logo">
+        <a th:href="@{/}"><img src="../img/thienloc-pharmacy-header.jpeg" alt="thiên lộc pharmacy" height="69px"></a>
+    </div>
+    <div class="humberger__menu__cart">
+        <ul>
+            <li><a th:href="@{/cart}"><i class="fa fa-shopping-bag"></i> <span class="total_product"></span></a></li>
+        </ul>
+        <div class="header__cart__price"><a th:href="@{/cart}"><span class="total_price">0</span><span class="vnd"> ₫</span></a></div>
+    </div>
+    <nav class="humberger__menu__nav mobile-menu">
+        <ul>
+            <li><a th:href="@{/}">Trang chủ</a></li>
+            <li><a th:href="@{/blog}">Chia sẻ, mẹo vặt</a></li>
+            <li><a th:href="@{/guide}">Hướng dẫn mua hàng</a></li>
+            <li><a th:href="@{/contact}">Liên hệ</a></li>
+        </ul>
+    </nav>
+    <div id="mobile-menu-wrap"></div>
+    <div class="header__top__right__social">
+        <a href="#"><img src="../img/svg/facebook.svg" alt="facebook"></a>
+        <a href="#"><img src="../img/svg/zalo.svg" alt="zalo"></a>
+        <a href="#"><img src="../img/svg/tiktok.svg" alt="tiktok"></a>
+    </div>
+    <div class="humberger__menu__contact">
+        <ul>
+            <li>Cam kết chính hãng 100%</li>
+            <li>Miễn phí vận chuyển (đơn từ 500k)</li>
+        </ul>
+    </div>
+</div>
+<!-- Humberger End -->
+
+<!-- Header Section Begin -->
+<header class="header">
+    <div class="header__top">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6 col-md-6">
+                    <div class="header__top__left">
+                        <ul>
+                            <li>Cam kết chính hãng 100%</li>
+                            <li>Miễn phí vận chuyển (đơn từ 500k)</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-6">
+                    <div class="header__top__right">
+                        <div class="header__top__right__social">
+                            <a href="#"><img src="../img/svg/facebook.svg" alt="facebook"></a>
+                            <a href="#"><img src="../img/svg/zalo.svg" alt="zalo"></a>
+                            <a href="#"><img src="../img/svg/tiktok.svg" alt="tiktok"></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-3">
+                <div class="header__logo">
+                    <a th:href="@{/}"><img src="../img/thienloc-pharmacy-header.jpeg" alt="thiên lộc pharmacy" height="69px"></a>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <nav class="header__menu">
+                    <ul>
+                        <li><a th:href="@{/}">Trang chủ</a></li>
+		                <li><a th:href="@{/blog}">Chia sẻ, mẹo vặt</a></li>
+		                <li><a th:href="@{/guide}">Hướng dẫn mua hàng</a></li>
+		                <li><a th:href="@{/contact}">Liên hệ</a></li>
+                    </ul>
+                </nav>
+            </div>
+            <div class="col-lg-3">
+                <div class="header__cart">
+                    <ul>
+                        <li><a th:href="@{/cart}"><i class="fa fa-shopping-bag"></i> <span class="total_product"></span></a></li>
+                    </ul>
+                    <div class="header__cart__price"><a th:href="@{/cart}"><span class="total_price">0</span><span class="vnd"> ₫</span></a></div>
+                </div>
+            </div>
+        </div>
+        <div class="humberger__open">
+            <i class="fa fa-bars"></i>
+        </div>
+    </div>
+</header>
+<!-- Header Section End -->
+
+<!-- Hero Section Begin -->
+<section class="hero hero-normal">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-3">
+                <div class="hero__categories">
+                    <div class="hero__categories__all">
+                        <i class="fa fa-bars"></i>
+                        <span>Danh mục</span>
+                    </div>
+                    <ul class="main_categories__menu__dropdown">
+                    	<th:block th:each="category : ${categoryList}">
+                           	<li th:if="${category.categoryType} == 1"><a th:href="@{|/category/${category.categoryCode}-${category.categoryId}|}"><th:block th:text="${category.categoryName}" /></a> <i class="fa fa-angle-right"></i>
+                                <ul class="children_categories__menu__dropdown" style="display: none;" >
+                                	<th:block th:each="categorySub : ${categoryList}" th:if="${categorySub.categoryParentId} == ${category.categoryId}">
+	                                    <li><a th:href="@{|/category/${categorySub.categoryCode}-${categorySub.categoryId}|}"><th:block th:text="${categorySub.categoryName}" /></a></li>
+                                	</th:block>
+                                </ul>
+                            </li>
+                    	</th:block>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-lg-9">
+                <div class="hero__search">
+                    <div class="hero__search__form">
+                        <form method="GET" th:action="@{/search}">
+                            <input type="text" name="key" placeholder="Bạn đang tìm gì?">
+                            <button type="submit" class="site-btn">Tìm kiếm</button>
+                        </form>
+                    </div>
+                    <div class="hero__search__phone">
+                        <div class="hero__search__phone__icon">
+                            <a href="#"><i class="fa fa-phone"></i></a>
+                        </div>
+                        <div class="hero__search__phone__text">
+                            <a href="#">0905 000 000</a>
+                            <br>
+                            <span>Hỗ trợ, tư vấn</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Hero Section End -->

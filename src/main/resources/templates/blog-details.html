@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="Thiên Lộc pharmacy">
+    <meta name="keywords" content="thien loc, thiên lộc, Thiên Lộc pharmacy">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title th:text="${blogDetails.title}"></title>
+
+    <!-- Google Font -->
+    <!-- <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;600;900&display=swap" rel="stylesheet"> -->
+
+    <!-- Css Styles -->
+    <link rel="stylesheet" href="../css/bootstrap.min.css" type="text/css">
+    <link rel="stylesheet" href="../css/font-awesome.min.css" type="text/css">
+    <link rel="stylesheet" href="../css/elegant-icons.css" type="text/css">
+    <link rel="stylesheet" href="../css/slicknav.min.css" type="text/css">
+    <link rel="stylesheet" href="../css/style.css" type="text/css">
+    
+</head>
+
+<body>
+	<th:block th:include="/_header"></th:block>
+
+    <!-- Breadcrumb Section Begin -->
+    <section class="breadcrumb-section set-bg" data-setbg="../images/banner/breadcrumb.jpg">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <div class="breadcrumb__text">
+                        <h3 th:text="${blogDetails.title}"></h3>
+                        <div class="breadcrumb__option">
+                            <a href="/">Trang chủ</a> &nbsp;ー&nbsp;
+                            <a th:href="@{/blog}">Chia sẻ, mẹo vặt</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Breadcrumb Section End -->
+
+    <!-- Blog Details Section Begin -->
+    <section class="blog-details spad">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 col-md-5 order-md-1 order-2">
+                    <div class="blog__sidebar">
+                        <div class="blog__sidebar__item">
+                            <h4>Bài viết mới</h4>
+                            <div class="blog__sidebar__recent">
+                                <div th:each="newBlog,iterStat : ${newBlogs}" class="blog__sidebar__recent__item">
+                                    <div class="blog__sidebar__recent__item__pic">
+                                    	<a th:href="@{|/blog-details/${newBlog.titleCode}-${newBlog.blogId}|}"><img th:src="@{|../images/blog/${newBlog.Name}|}" th:attr="alt=@{|${newBlog.Title}|}" style="width: 70px; height: 70ppx;"></a>
+                                    </div>
+                                    <div class="blog__sidebar__recent__item__text" style="margin-right: 15px;">
+                                        <h6><a th:text="${newBlog.title}" th:href="@{|/blog-details/${newBlog.titleCode}-${newBlog.blogId}|}"></a></h6>
+                                        <span th:text="${#calendars.format(newBlog.updatedDate, 'dd-MM-yyyy')}"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-8 col-md-7 order-md-1 order-1">
+                    <div class="blog__details__text">
+                    	<img th:src="@{|../images/blog/${blogDetails.Name}|}" th:attr="alt=@{|${blogDetails.Title}|}" class="center">
+                        <div style="display: none;" th:text="${blogDetails.content}" class="content__blogDetails__hide"></div>
+                        <div class="content__blogDetails"></div>
+                    </div>
+                    <div class="blog__details__content">
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="blog__details__author">
+                                    <div class="blog__details__author__pic">
+                                        <img src="../images/avatar/details-author.jpeg" alt="">
+                                    </div>
+                                    <div class="blog__details__author__text">
+                                        <h6>Văn Thị Kiều Nhung</h6>
+                                        <!-- <span>Admin</span> -->
+                                        <span><i class="fa fa-calendar-o"></i>&nbsp;&nbsp;<th:block th:text="${#calendars.format(blogDetails.updatedDate, 'dd-MM-yyyy')}"></th:block></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Blog Details Section End -->
+    
+	<th:block th:include="/_footer"></th:block>
+
+    <!-- Js Plugins -->
+    <script src="../js/jquery-3.3.1.min.js"></script>
+    <script src="../js/bootstrap.min.js"></script>
+    <script src="../js/jquery.slicknav.js"></script>
+    <script src="../js/owl.carousel.min.js"></script>
+    <script src="../js/main.js"></script>
+    
+    <script>
+	    $(document).ready(function() {
+	       	var content = $('.content__blogDetails__hide').text();
+	       	$('.content__blogDetails').html(content.replace('&lt;', '<').replace('&gt;', '>'));
+	       	$('.content__blogDetails__hide').remove();
+	    });
+	</script>
+
+</body>
+
+</html>

@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+	    <meta charset="UTF-8">
+	    <meta name="description" content="Thiên Lộc pharmacy">
+	    <meta name="keywords" content="thien loc, thiên lộc, Thiên Lộc pharmacy">
+	    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+	    <title>Thiên Lộc pharmacy</title>
+	
+	    <!-- Google Font -->
+	    <!-- <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;600;900&display=swap" rel="stylesheet"> -->
+	
+	    <!-- Css Styles -->
+	    <link rel="stylesheet" href="../css/bootstrap.min.css" type="text/css">
+	    <link rel="stylesheet" href="../css/font-awesome.min.css" type="text/css">
+	    <link rel="stylesheet" href="../css/jquery-ui.min.css" type="text/css">
+	    <link rel="stylesheet" href="../css/style.css" type="text/css">
+	    <link rel="stylesheet" href="../summernote/summernote-bs5.min.css" type="text/css">
+	    <style>
+			.header__top a {
+		      	color: #007bff;
+		      	font-size: 16px;
+		    }
+	    </style>	    
+	</head>
+	
+	<body>
+	    <div class="container">
+	    	<th:block th:include="/admin/_header"></th:block>
+	        <div class="admin__form">
+	        	<form th:object="${productForm}" method="POST" th:action="@{/admin/product}" enctype="multipart/form-data">
+	                <div class="row">
+				        <div class="col-12">
+				            <div class="section-title__admin">
+				                <h4>Chỉnh sửa sản phẩm</h4>
+				            </div>
+				        </div>
+			        </div>
+	                <div class="row">
+	                    <div class="col-lg-12">
+	                   		<!-- // -->
+	                    	<input hidden th:field="*{productId}" class="productId" type="text">
+	                        <input hidden th:field="*{display}" class="displayFlag" type="text">
+	                        <input hidden th:field="*{topView}" class="topView" type="text">
+	                        <input hidden th:field="*{promotionFlag}" class="promotionFlag" type="text">
+	                        <!-- // -->
+	                        <div class="admin__input">
+	                            <p>Tên sản phẩm<span>*</span></p>
+	                            <span class="show-error error-productName">Chưa nhập tên sản phẩm</span>
+	                            <input th:field="*{productName}" class="productName" type="text" placeholder="tên sản phẩm">
+	                        </div>
+	                        <div class="admin__input">
+	                            <p>Thuộc danh mục<span>*</span></p>
+	                            <span class="show-error error-categoryName">Chưa chọn danh mục <br/></span>
+								<select th:field="*{categoryId}" class="form-select mainOptgroup" id="categoryId" style="width: 50%; height: 40px;">
+									<option value=""> -- </option>
+									<th:block th:each="category : ${categoryList}">
+										<optgroup th:if="!${category.categoryParentId}" th:class="main__menu_ + ${category.categoryId}" th:value="${category.categoryId}" th:label="${category.categoryName}"></optgroup>
+									</th:block>
+								</select>
+								<div class="subOption" style="display: none;">
+									<th:block th:each="category : ${categoryList}">
+										<option th:selected="(${category.categoryId} == *{categoryId})" th:if="${category.categoryParentId}" th:value="${category.categoryId}" th:class="sub__menu_ + ${category.categoryId}" th:classappend="${category.categoryParentId}" th:utext="${category.categoryName}"></option>
+									</th:block>
+								</div>
+							</div>
+
+	                        <div class="admin__input">
+	                            <p>Giá sản phẩm<span>*</span></p>
+	                            <span class="show-error error-price">Chưa nhập giá</span>
+	                            <input th:field="*{price}" class="price" type="text" placeholder="giá">
+	                        </div>
+	                        <div class="form-check" style="margin-bottom: 24px; padding-left: 0px;">
+	                        	<p>Giảm giá</p>
+							  	<input class="form-check-input" type="radio" name="promotionFlag" id="promotionFlag1" style="margin-left: 0px;">
+							  	<label class="form-check-label" for="promotionFlag1" style="padding-left: 25px; margin-right: 40px;">Không</label>
+							  	
+							  	<input class="form-check-input" type="radio" name="promotionFlag" id="promotionFlag2" style="margin-left: 0px;">
+							  	<label class="form-check-label" for="promotionFlag2" style="padding-left: 25px;">Có</label>
+							</div>
+							<div class="admin__input promotionPriceArea">
+	                            <p>Giá sau khi giảm<span>*</span></p>
+	                            <span class="show-error error-promotion-price">Chưa nhập giá</span>
+	                            <input th:field="*{promotionPrice}" class="promotionPrice" type="text" placeholder="giá">
+	                        </div>
+	                        <div class="admin__input">
+	                            <p>Thương hiệu<span>*</span></p>
+	                            <span class="show-error error-brand">Chưa nhập thương hiệu</span>
+	                            <input th:field="*{brand}" class="brand" type="text" placeholder="thương hiệu">
+	                        </div>
+	                        <div class="admin__input">
+	                            <p>Mô tả sản phẩm<span>*</span></p>
+	                            <span class="show-error error-description">Chưa nhập mô tả</span>
+	                            <textarea th:field="*{description}" class="description" placeholder="mô tả sản phẩm" style="height: 500px;"></textarea>
+	                        </div>
+	                        <div class="admin__input">
+	                            <p>Chi tiết sản phẩm<span>*</span></p>
+	                            <span class="show-error error-detail">Chưa nhập chi tiết</span>
+	                            <textarea th:field="*{detail}" class="detail" placeholder="chi tiết sản phẩm" style="height: 500px;"></textarea>
+	                        </div>
+	                        <div class="admin__input">
+	                            <p>Thông tin sản phẩm<span>*</span></p>
+	                            <span class="show-error error-info">Chưa nhập thông tin</span>
+	                            <textarea th:field="*{info}" class="info" placeholder="thông tin sản phẩm" style="height: 500px;"></textarea>
+	                        </div>
+	                        <div class="admin__input">
+	                            <p>Số lượng trong kho<span>*</span></p>
+	                            <span class="show-error error-quantity">Chưa nhập số lượng</span>
+	                            <input th:field="*{quantity}" class="quantity" type="text" placeholder="số lượng">
+	                        </div>
+	                        <div class="form-check" style="margin-bottom: 24px; padding-left: 0px;">
+	                        	<p>Hiển thị ở</p>
+	                        	<input class="form-check-input" type="radio" name="topView" id="topView0" style="margin-left: 0px;">
+							  	<label class="form-check-label" for="topView0" style="padding-left: 25px; margin-right: 40px;">Mặc định</label>
+	                        	
+							  	<input class="form-check-input" type="radio" name="topView" id="topView1" style="margin-left: 0px;">
+							  	<label class="form-check-label" for="topView1" style="padding-left: 25px; margin-right: 40px;">Top bán chạy</label>
+							  	
+							  	<input class="form-check-input" type="radio" name="topView" id="topView2" style="margin-left: 0px;">
+							  	<label class="form-check-label" for="topView2" style="padding-left: 25px; margin-right: 40px;">Top tìm kiếm</label>
+							  	
+							  	<input class="form-check-input" type="radio" name="topView" id="topView3" style="margin-left: 0px;">
+							  	<label class="form-check-label" for="topView3" style="padding-left: 25px;">Top sản phẩm mới</label>
+							</div>
+							<div class="form-check" style="margin-bottom: 24px; padding-left: 0px;">
+	                        	<p>Xuất bản/Hiển thị</p>
+							  	<input class="form-check-input" type="radio" name="display" id="display1" style="margin-left: 0px;">
+							  	<label class="form-check-label" for="display1" style="padding-left: 25px; margin-right: 40px;">Không</label>
+							  	
+							  	<input class="form-check-input" type="radio" name="display" id="display2" style="margin-left: 0px;">
+							  	<label class="form-check-label" for="display2" style="padding-left: 25px;">Có</label>
+							</div>
+							<div class="admin__input" th:if="*{productId}">
+	                            <p>Hình ảnh sản phẩm</p>
+	                            <a th:href="@{|/admin/imageProduct?productId=*{productId}|}" style="color: #007bff;">Nhấn vào đây để thêm hình ảnh cho sản phẩm</a>
+	                        </div>
+	                        <div class="admin__button_area" style="margin: 50px 0px;">
+	                            <button class="btn btn-secondary back-btn" type="button">Quay lại</button>
+	                            <button class="btn btn-primary add-blog-btn" value="Upload" type="submit" style="float: right;">Cập nhật</button>
+	                        </div>
+	                    </div>
+	                </div>
+	        	</form>
+	        </div>
+	    </div>
+		
+		<!-- Js Plugins -->
+		<script src="../js/jquery-3.3.1.min.js"></script>
+		<script src="../js/bootstrap.min.js"></script>
+		<script src="../js/jquery-ui.min.js"></script>
+		<script src="../summernote/summernote-bs5.js"></script>
+		<script src="../js/admin-product.js"></script>
+		
+	</body>
+</html>

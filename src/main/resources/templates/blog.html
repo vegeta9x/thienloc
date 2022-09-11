@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="Thiên Lộc pharmacy">
+    <meta name="keywords" content="thien loc, thiên lộc, Thiên Lộc pharmacy">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Chia sẻ, mẹo vặt</title>
+
+    <!-- Google Font -->
+    <!-- <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;600;900&display=swap" rel="stylesheet"> -->
+
+    <!-- Css Styles -->
+    <link rel="stylesheet" href="css/bootstrap.min.css" type="text/css">
+    <link rel="stylesheet" href="css/font-awesome.min.css" type="text/css">
+    <link rel="stylesheet" href="css/elegant-icons.css" type="text/css">
+    <link rel="stylesheet" href="css/slicknav.min.css" type="text/css">
+    <link rel="stylesheet" href="css/style.css" type="text/css">
+</head>
+
+<body>
+   <th:block th:include="/_header"></th:block>
+
+    <!-- Breadcrumb Section Begin -->
+    <section class="breadcrumb-section set-bg" data-setbg="../images/banner/breadcrumb.jpg">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <div class="breadcrumb__text">
+                        <h3>Chia sẻ, mẹo vặt</h3>
+                        <div class="breadcrumb__option">
+                            <a href="/">Trang chủ</a> &nbsp;ー&nbsp;
+                            <span>Chia sẻ, mẹo vặt</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Breadcrumb Section End -->
+
+    <!-- Blog Section Begin -->
+    <section class="blog spad" >
+        <div class="container">
+        	<input type='hidden' id='current_page' />
+		    <input type='hidden' id='show_per_page' />
+            <div class="row" id="content">
+                <div th:each="viewBlog,iterStat : ${viewBlogList}" class="col-lg-3 col-md-4 col-sm-6">
+                    <div class="blog__item">
+                        <div class="blog__item__pic">
+                        	<a th:href="@{|/blog-details/${viewBlog.titleCode}-${viewBlog.blogId}|}"><img th:src="@{|../images/blog/${viewBlog.Name}|}" th:attr="alt=@{|${viewBlog.Title}|}" style="width: 360px; height: 260px;"></a>
+                        </div>
+                        <div class="blog__item__text">
+                            <ul>
+                                <li><i class="fa fa-calendar-o"></i>&nbsp;&nbsp;<span th:text="${#calendars.format(viewBlog.updatedDate, 'dd-MM-yyyy')}"></span></li>
+                            </ul>
+                            <h5><a th:href="@{|/blog-details/${viewBlog.titleCode}-${viewBlog.blogId}|}" th:text="${viewBlog.title}"></a></h5>
+                            <p style="display: none;" th:text="${viewBlog.content}" class="content__blogDetails__hide"></p>
+                            <div class="blogList__content" style="margin-bottom: 15px;"></div>
+                            <a th:href="@{|/blog-details/${viewBlog.titleCode}-${viewBlog.blogId}|}" class="blog__btn">Xem thêm <span class="arrow_right"></span></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <div id="page_navigation" class="product__pagination blog__pagination"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Blog Section End -->
+
+	<th:block th:include="/_footer"></th:block>
+
+    <!-- Js Plugins -->
+    <script src="js/jquery-3.3.1.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/jquery.slicknav.js"></script>
+    <script src="js/owl.carousel.min.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/page_navigation.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
+</body>
+
+</html>

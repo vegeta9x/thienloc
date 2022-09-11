@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+	    <meta charset="UTF-8">
+	    <meta name="description" content="Thiên Lộc pharmacy">
+	    <meta name="keywords" content="thien loc, thiên lộc, Thiên Lộc pharmacy">
+	    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+	    <title>Thiên Lộc pharmacy</title>
+	
+	    <!-- Google Font -->
+	    <!-- <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;600;900&display=swap" rel="stylesheet"> -->
+	
+	    <!-- Css Styles -->
+	    <link rel="stylesheet" href="../css/bootstrap.min.css" type="text/css">
+	    <link rel="stylesheet" href="../css/font-awesome.min.css" type="text/css">
+	    <link rel="stylesheet" href="../css/jquery-ui.min.css" type="text/css">
+	    <link rel="stylesheet" href="../css/style.css" type="text/css">
+	    
+	    <style>
+			.header__top a {
+		      	color: #007bff;
+		      	font-size: 16px;
+		    }
+	    </style>
+	    
+	</head>
+	
+	<body>
+	    <div class="container">
+	    	<th:block th:include="/admin/_header"></th:block>
+	        <div class="admin__form">
+		        <form th:object="${categoryForm}" method="POST" th:action="@{/admin/newCategory}" enctype="multipart/form-data">
+		        	 <div class="row">
+				        <div class="col-12">
+				            <div class="section-title__admin">
+				                <h4>Tạo danh mục mới</h4>
+				            </div>
+				        </div>
+			        </div>
+	                <div class="row">
+	                    <div class="col-lg-12">
+	                    	<input hidden th:field="*{display}" class="display" type="text">
+	                    	<div class="form-check" style="padding-left: 0px; margin-bottom: 24px;">
+	                            <p>Loại danh mục<span style="color: Red;">*</span></p>
+	                            <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" style="margin-left: 0px;">
+							  	<label class="form-check-label" for="flexRadioDefault1" id="label_flexRadioDefault1" style="margin-right: 40px; margin-left: 25px;">Danh mục chính</label>
+							  	
+							  	<input th:field="*{categoryType}" hidden class="categoryType" type="text">
+							  	
+							  	<input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" checked>
+							  	<label class="form-check-label" for="flexRadioDefault2" id="label_flexRadioDefault2" style="margin-left: 10px;">Danh mục phụ</label>
+	                        </div>
+	                        <div class="admin__input mainCategorySelect">
+	                            <p>Chọn danh mục chính<span>*</span></p>
+	                            <span class="show-error error-categoryParentId">Chưa chọn danh mục<br/></span>
+	                            <select th:field="*{categoryParentId}" class="form-select" id="categoryParentId" style="width: 50%; height: 40px;">
+	                            	<option value=""> -- </option>
+									<option th:each="category : ${categoryMainList}" th:value="${category.categoryId}" th:utext="${category.categoryName}"></option>
+								</select>
+	                        </div>
+	                        <div class="form-check display_area" style="margin-bottom: 24px; padding-left: 0px;">
+	                        	<p>Xuất bản/Hiển thị ở trang chủ</p>
+							  	<input class="form-check-input" type="radio" name="display" id="display1" style="margin-left: 0px;">
+							  	<label class="form-check-label" for="display1" style="padding-left: 25px; margin-right: 40px;">Không</label>
+							  	
+							  	<input class="form-check-input" type="radio" name="display" id="display2" style="margin-left: 0px;">
+							  	<label class="form-check-label" for="display2" style="padding-left: 25px;">Có</label>
+							</div>
+	                        
+							<div class="admin__input">
+	                            <p>Tên danh mục<span>*</span></p>
+	                            <span class="show-error error-categoryName">Chưa nhập tên danh mục</span>
+	                            <input th:field="*{categoryName}" class="categoryName" type="text" placeholder="tên danh mục">
+	                        </div>
+							<div class="admin__input">
+	                            <p>Thứ tự<span>*</span></p>
+	                            <span class="show-error error-categorySort">Chưa nhập thứ tự</span>
+	                            <input th:field="*{sort}" class="categorySort" type="text" placeholder="thứ tự">
+	                        </div>
+	                        <div class="admin__button_area" style="margin: 50px 0px;">
+	                            <button class="btn btn-secondary back-btn" type="button">Quay lại</button>
+	                            <button class="btn btn-primary add-blog-btn" value="Upload" type="submit" style="float: right;">Đăng ký</button>
+	                        </div>
+	                    </div>
+	                </div>
+	        	</form>
+	        </div>
+	    </div>
+		
+		<!-- Js Plugins -->
+		<script src="../js/jquery-3.3.1.min.js"></script>
+		<script src="../js/bootstrap.min.js"></script>
+		<script src="../js/jquery-ui.min.js"></script>
+		
+	    <script>
+		    $(document).ready(function() {
+				$("#display1").prop('checked', true);
+		    	$('.add-blog-btn').click(function() {
+					if($("#categoryParentId").val() == '' && $('#flexRadioDefault2').is(":checked")) {
+						$(".show-error.error-categoryParentId").show();
+						return false;
+					} else
+						$(".show-error.error-categoryParentId").hide();
+			
+			        if($(".admin__input .categoryName").val() == '') {
+						$(".error-categoryName").show();
+						return false;
+					}
+			            
+			        if($(".admin__input .categorySort").val() == '') {
+						$(".show-error.error-categorySort").show();
+						return false;
+					} else
+						$(".show-error.error-categorySort").hide();
+					
+					if($('#flexRadioDefault1').is(":checked"))
+						$(".categoryType").val(1);
+					else
+						$(".categoryType").val(2);
+					
+					if($('#display1').is(":checked"))
+						$(".display").val(0);
+					else
+						$(".display").val(1);
+			    });
+			    
+			    $('.categorySort').change(function() {
+					var svalue= $(this).val();
+				    var regex=/^[0-9]+$/;
+				    if (svalue != '' && !svalue.match(regex)) {
+				        alert("bạn phải nhập chữ số từ 1 đến 9");
+				        return false;
+				    }
+				});
+			    
+		        if( $('#flexRadioDefault1').is(':checked') ){
+			        $('.mainCategorySelect').hide(300);
+			        $('.display_area').hide(300);
+			    }
+			
+			    $('#flexRadioDefault1').on('click', function () {
+			        $('.mainCategorySelect').hide(300);
+			        $('.display_area').hide(300);
+			    });
+			    $('#label_flexRadioDefault1').on('click', function () {
+			        $('.mainCategorySelect').hide(300);
+			        $('.display_area').hide(300);
+			    });
+			
+			    $('#flexRadioDefault2').on('click', function () {
+			        $('.mainCategorySelect').show(300);
+			        $('.display_area').show(300);
+			    });
+			    $('#label_flexRadioDefault2').on('click', function () {
+			        $('.mainCategorySelect').show(300);
+			        $('.display_area').show(300);
+			    });
+			
+			    $('.back-btn').click(function() {
+					if(confirm("Sẽ mất hết nội dung bạn đã nhập. Bạn có muốn quay lại ?"))
+			            history.go(-1);
+					
+					return false;
+			    });
+		    });
+		</script>
+	</body>
+</html>

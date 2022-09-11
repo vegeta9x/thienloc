@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+	    <meta charset="UTF-8">
+	    <meta name="description" content="Thiên Lộc pharmacy">
+	    <meta name="keywords" content="thien loc, thiên lộc, Thiên Lộc pharmacy">
+	    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+	    <title>Thiên Lộc pharmacy</title>
+	
+	    <!-- Google Font -->
+	    <!-- <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;600;900&display=swap" rel="stylesheet"> -->
+	
+	    <!-- Css Styles -->
+	    <link rel="stylesheet" href="../css/bootstrap.min.css" type="text/css">
+	    <link rel="stylesheet" href="../css/font-awesome.min.css" type="text/css">
+	    <link rel="stylesheet" href="../css/jquery-ui.min.css" type="text/css">
+	    <link rel="stylesheet" href="../css/style.css" type="text/css">
+	    <link rel="stylesheet" href="../summernote/summernote-bs5.min.css" type="text/css">
+	    <style>
+			.header__top a {
+		      	color: #007bff;
+		      	font-size: 16px;
+		    }
+	    </style>	    
+	</head>
+	
+	<body>
+	    <div class="container">
+	    	<th:block th:include="/admin/_header"></th:block>
+	        <div class="admin__form">
+	            <form th:object="${blogForm}" method="POST" th:action="@{/admin/blog}" enctype="multipart/form-data">
+	                <div class="row">
+				        <div class="col-12">
+				            <div class="section-title__admin">
+				                <h4>Chỉnh sửa bài viết</h4>
+				            </div>
+				        </div>
+			        </div>
+	                <div class="row">
+	                    <div class="col-lg-12">
+	                        <input hidden th:field="*{blogId}" class="blogId" type="text">
+	                        <input hidden th:field="*{display}" class="display-blog" type="text">
+	                        <div class="admin__input">
+	                            <p>Tiêu đề bài viết<span>*</span></p>
+	                            <span class="show-error error-title">Chưa nhập tiêu đề</span>
+	                            <input th:field="*{title}" class="title" type="text" placeholder="tiêu đề">
+	                        </div>
+	                        <div class="admin__input">
+	                            <p>Nội dung<span>*</span></p>
+	                            <span class="show-error error-content">Chưa nhập nội dung</span>
+	                            <div class="editor"></div>
+	                            <textarea th:field="*{content}" class="content" placeholder="nội dung" style="height: 500px;"></textarea>
+	                        </div>
+	                        <div class="form-check" style="margin-bottom: 24px; padding-left: 0px;">
+	                        	<p>Xuất bản/Hiển thị</p>
+							  	<input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" style="margin-left: 0px;">
+							  	<label class="form-check-label" for="flexRadioDefault1" style="padding-left: 25px; margin-right: 40px;">Không</label>
+							  	
+							  	<input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" style="margin-left: 0px;">
+							  	<label class="form-check-label" for="flexRadioDefault2" style="padding-left: 25px;">Có</label>
+							</div>
+	                        <div class="admin__input input-group mb-3" style="display: block;">
+	                            <p>Hình ảnh</p>
+	                            <div th:if="${blogForm.blogId != null}" class="text-center image" style="margin-bottom: 20px;">
+								  	<img th:src="@{|../images/blog/${blogForm.Name}|}" class="rounded" width="20%" th:attr="alt=@{|${blogForm.Title}|}">
+								</div>
+	                            <input th:field="*{fileData}" type="file" class="form-control" style="flex: none;">
+	                        </div>
+	                        <div class="admin__button_area" style="margin: 50px 0px;">
+	                            <button class="btn btn-secondary back-btn" type="button">Quay lại</button>
+	                            <button class="btn btn-primary add-blog-btn" value="Upload" type="submit" style="float: right;">Cập nhật</button>
+	                        </div>
+	                    </div>
+	                </div>
+	            </form>
+	        </div>
+	    </div>
+		
+		<!-- Js Plugins -->
+		<script src="../js/jquery-3.3.1.min.js"></script>
+		<script src="../js/bootstrap.min.js"></script>
+		<script src="../js/jquery-ui.min.js"></script>
+		<script src="../summernote/summernote-bs5.js"></script>
+		
+	    <script>
+		    $(document).ready(function() {
+				 $('.add-blog-btn').click(function() {
+			        if($(".admin__input .title").val() == '') {
+						$(".show-error.error-title").show();
+						return false;
+					} else
+						$(".show-error.error-title").hide();
+			            
+			        if($(".admin__input .content").val() == '') {
+						$(".show-error.error-content").show();
+						return false;
+					} else
+						$(".show-error.error-content").hide();
+					
+					if($('#flexRadioDefault1').is(":checked"))
+						$(".display-blog").val(0);
+					else
+						$(".display-blog").val(1);
+			    });
+			    
+			    if($(".blogId").val() == "") {
+					$(".add-blog-btn").html("Đăng ký");
+					$("h4").html("Tạo mới bài viết");
+					$("#flexRadioDefault1").prop('checked', true);
+				}
+			    if($(".display-blog").val() == 0) {
+					$("#flexRadioDefault1").prop('checked', true);
+				} else {
+					$("#flexRadioDefault2").prop('checked', true);
+				}
+				
+			
+		        $('.content').summernote({
+		            height: 200,
+		            toolbar: [
+		                ['style', ['bold', 'italic', 'underline', 'clear']],
+		                ['font', ['strikethrough', 'superscript', 'subscript']],
+		                ['fontsize', ['fontsize']],
+		                ['color', ['color']],
+		                ['para', ['ul', 'ol', 'paragraph']],
+		                ['height', ['height']]
+		            ]
+		        });
+		        
+	            $('.back-btn').click(function() {
+			       if(confirm("Sẽ mất hết nội dung bạn đã nhập. Bạn có muốn quay lại ?"))
+			            history.go(-1);
+			        return false;
+			    });
+		    });
+		</script>
+		
+	</body>
+</html>

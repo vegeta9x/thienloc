@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+	    <meta charset="UTF-8">
+	    <meta name="description" content="Thiên Lộc pharmacy">
+	    <meta name="keywords" content="thien loc, thiên lộc, Thiên Lộc pharmacy">
+	    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+	    <title>Quản lý danh sách bài viết</title>
+	
+	    <!-- Google Font -->
+	    <!-- <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;600;900&display=swap" rel="stylesheet"> -->
+	
+	    <!-- Css Styles -->
+	    <link rel="stylesheet" href="../css/bootstrap.min.css" type="text/css">
+	    <link rel="stylesheet" href="../css/font-awesome.min.css" type="text/css">
+	    <link rel="stylesheet" href="../css/jquery-ui.min.css" type="text/css">
+	    <link rel="stylesheet" href="../css/style.css" type="text/css">
+	    
+	    <style>
+			.header__top a {
+		      	color: #007bff;
+		      	font-size: 16px;
+		    }
+	    </style>
+	</head>
+	
+	<body>
+	    <div class="container admin__page">
+        	<th:block th:include="/admin/_header"></th:block>
+	        <div class="row">
+		        <div class="col-12">
+		            <div class="section-title__admin">
+		                <h4>Danh sách bài viết</h4>
+		            </div>
+		        </div>
+	        </div>
+	    	<div class="row">
+	    		<div class="col-lg-12">
+	    			<div class="info__admin__blogList" style="margin-bottom: 20px;">
+		    			<div class="filter__found" style="text-align: left; display: inline-block;">
+	                        <h6><span th:text="${blogList.size()}"></span> bài viết</h6>
+	                    </div>
+	                    <a th:href="@{/admin/blog}" style="float: right;">Tạo bài viết mới</a>
+	    			</div>
+	    			
+	    			<table class="table table-hover admin__blogList">
+					  <thead>
+					    <tr>
+					      <th scope="col" style="width: 5%;">#</th>
+					      <th scope="col" style="width: 60%;">Tiêu đề</th>
+					      <th scope="col" style="width: 15%;">Xuất bản</th>
+					      <th scope="col" style="width: 20%;">Tác vụ</th>
+					    </tr>
+					  </thead>
+					  <tbody>
+					    <tr th:each="blog,iterStat : ${blogList}">
+					      <th th:text="${iterStat.count}" scope="row"></th>
+					      <td>
+					      	<span th:text="${blog.title}"></span>
+					      	<p th:text="${blog.content}" class="blogList__content"></p>
+					      </td>
+					      <td hidden th:text="${blog.display}" class="display_code" type="text"></td>
+					      <td class="display"></td>
+					      <td>
+					      	<a th:href="@{|/blog-details/${blog.titleCode}-${blog.blogId}|}" class="review"><i class="fa fa-eye"></i> xem</a> &nbsp;&nbsp;|&nbsp;&nbsp; 
+					      	<a th:href="@{|/admin/blog?blogId=${blog.blogId}|}" class="edit"><i class="fa fa-edit"></i> sửa</a> &nbsp;&nbsp;|&nbsp;&nbsp; 
+					      	<a th:href="@{|/admin/deleteBlog?blogId=${blog.blogId}|}" class="delete"><i class="fa fa-trash"></i> xoá</a>
+					      </td>
+					    </tr>
+					    <tr th:if="${#lists.isEmpty(blogList)}"><td colspan="4">Không có dữ liệu</td></tr>
+					  </tbody>
+					</table>
+	    		</div>
+	    	</div>
+	    </div>
+		
+		<!-- Js Plugins -->
+		<script src="../js/jquery-3.3.1.min.js"></script>
+		<script src="../js/bootstrap.min.js"></script>
+		<script src="../js/jquery-ui.min.js"></script>
+		<script>
+			$(document).ready(function() {
+				$( ".display_code" ).each(function(index) {
+					if($(this).text() == 1)
+						$(".display").eq(index).html("Có");
+					else
+						$(".display").eq(index).html("Không");
+				});
+			    $('.delete').click(function() {
+			       if(confirm("Bạn có chắc chắn muốn xoá ?"))
+			        {
+			            return true;
+			        }        
+			        return false;
+			    });
+			});
+		    
+		</script>
+	</body>
+</html>

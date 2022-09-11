@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="Thiên Lộc pharmacy">
+    <meta name="keywords" content="thien loc, thiên lộc, Thiên Lộc pharmacy">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Thiên Lộc pharmacy</title>
+
+    <!-- Google Font -->
+    <!-- <link th:href="@{/https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;600;900&display=swap" rel="stylesheet"> -->
+
+    <!-- Css Styles -->
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" type="text/css">
+    <link rel="stylesheet" th:href="@{/css/font-awesome.min.css}" type="text/css">
+    <link rel="stylesheet" th:href="@{/css/elegant-icons.css}" type="text/css">
+    <link rel="stylesheet" th:href="@{/css/nice-select.css}" type="text/css">
+    <link rel="stylesheet" th:href="@{/css/jquery-ui.min.css}" type="text/css">
+    <link rel="stylesheet" th:href="@{/css/owl.carousel.min.css}" type="text/css">
+    <link rel="stylesheet" th:href="@{/css/slicknav.min.css}" type="text/css">
+    <link rel="stylesheet" th:href="@{/css/style.css}" type="text/css">
+</head>
+
+<body>
+    <!-- Page Preloder -->
+    <div id="preloder">
+        <div class="loader"></div>
+    </div>
+    <div id='snackbar'><span><i class='fa fa-check'></i> Thêm sản phẩm thành công</span></div>
+
+    <!-- Humberger Begin -->
+    <div class="humberger__menu__overlay"></div>
+    <div class="humberger__menu__wrapper">
+        <div class="humberger__menu__logo">
+            <a href="/"><img src="img/thienloc-pharmacy-header.jpeg" alt="thiên lộc pharmacy" height="69px"></a>
+        </div>
+        <div class="humberger__menu__cart">
+            <ul>
+                <li><a th:href="@{/cart}"><i class="fa fa-shopping-bag"></i> <span class="total_product"></span></a></li>
+            </ul>
+            <div class="header__cart__price"><a th:href="@{/cart}"><span class="total_price">0</span><span class="vnd"> ₫</span></a></div>
+        </div>
+        <nav class="humberger__menu__nav mobile-menu">
+            <ul>
+                <li class="active"><a href="/">Trang chủ</a></li>
+                <li><a th:href="@{/blog}">Chia sẻ, mẹo vặt</a></li>
+                <li><a th:href="@{/guide}">Hướng dẫn mua hàng</a></li>
+                <li><a th:href="@{/contact}">Liên hệ</a></li>
+            </ul>
+        </nav>
+        <div id="mobile-menu-wrap"></div>
+        <div class="header__top__right__social">
+            <a th:href="@{/#}"><img src="img/svg/facebook.svg" alt="facebook"></a>
+            <a th:href="@{/#}"><img src="img/svg/zalo.svg" alt="zalo"></a>
+            <a th:href="@{/#}"><img src="img/svg/tiktok.svg" alt="tiktok"></a>
+        </div>
+        <div class="humberger__menu__contact">
+            <ul>
+                <li>Cam kết chính hãng 100%</li>
+                <li>Miễn phí vận chuyển (đơn từ 500k)</li>
+            </ul>
+        </div>
+    </div>
+    <!-- Humberger End -->
+
+    <!-- Header Section Begin -->
+    <header class="header">
+        <div class="header__top">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-6 col-md-6">
+                        <div class="header__top__left">
+                            <ul>
+                            	<li>Cam kết chính hãng 100%</li>
+                                <li>Miễn phí vận chuyển (đơn từ 500k)</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-6">
+                        <div class="header__top__right">
+                            <div class="header__top__right__social">
+                                <a th:href="@{/#}"><img src="img/svg/facebook.svg" alt="facebook"></a>
+                                <a th:href="@{/#}"><img src="img/svg/zalo.svg" alt="zalo"></a>
+                                <a th:href="@{/#}"><img src="img/svg/tiktok.svg" alt="tiktok"></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3">
+                    <div class="header__logo">
+                        <a href="/"><img src="img/thienloc-pharmacy-header.jpeg" alt="thiên lộc pharmacy" height="69px"></a>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <nav class="header__menu">
+                        <ul>
+                            <li><a href="/">Trang chủ</a></li>
+                            <li><a th:href="@{/blog}">Chia sẻ, mẹo vặt</a></li>
+                            <li><a th:href="@{/guide}">Hướng dẫn mua hàng</a></li>
+                            <li><a th:href="@{/contact}">Liên hệ</a></li>
+                        </ul>
+                    </nav>
+                </div>
+                <div class="col-lg-3">
+                    <div class="header__cart">
+                        <ul>
+                            <li><a th:href="@{/cart}"><i class="fa fa-shopping-bag"></i> <span class="total_product"></span></a></li>
+                        </ul>
+                        <div class="header__cart__price"><a th:href="@{/cart}"><span class="total_price">0</span><span class="vnd"> ₫</span></a></div>
+                    </div>
+                </div>
+            </div>
+            <div class="humberger__open">
+                <i class="fa fa-bars"></i>
+            </div>
+        </div>
+    </header>
+    <!-- Header Section End -->
+
+    <!-- Hero Section Begin -->
+    <section class="hero">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3">
+                    <div class="hero__categories" style="position: relative;">
+                        <div class="hero__categories__all">
+                            <i class="fa fa-bars"></i>
+                            <span>Danh mục</span>
+                        </div>
+                        <ul class="main_categories__menu__dropdown">
+                        	<th:block th:each="category : ${categoryList}">
+	                           	<li th:if="${category.categoryType} == 1"><a th:href="@{|/category/${category.categoryCode}-${category.categoryId}|}"><th:block th:text="${category.categoryName}" /></a> <i class="fa fa-angle-right"></i>
+	                                <ul class="children_categories__menu__dropdown" style="display: none;" >
+	                                	<th:block th:each="categorySub : ${categoryList}" th:if="${categorySub.categoryParentId} == ${category.categoryId}">
+		                                    <li><a th:href="@{|/category/${categorySub.categoryCode}-${categorySub.categoryId}|}"><th:block th:text="${categorySub.categoryName}" /></a></li>
+	                                	</th:block>
+	                                </ul>
+	                            </li>
+                        	</th:block>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-9">
+                    <div class="hero__search">
+                        <div class="hero__search__form">
+                            <form method="GET" th:action="@{/search}">
+                            	<input type="text" name="key" placeholder="Bạn đang tìm gì?">
+                                <button type="submit" class="site-btn">Tìm kiếm</button>
+                            </form>
+                        </div>
+                        <div class="hero__search__phone">
+                            <div class="hero__search__phone__icon">
+                                <a th:href="@{/#}"><i class="fa fa-phone"></i></a>
+                            </div>
+                            <div class="hero__search__phone__text">
+                                <a th:href="@{/#}">0905 000 000</a>
+                                <br>
+                                <span>Hỗ trợ, tư vấn</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="hero__item set-bg" data-setbg="../images/banner/banner.jpg">
+                        <div class="hero__text">
+                            <span>Vì sức khoẻ mọi nhà</span>
+                            <h2>Thiên Lộc</h2>
+                            <p>Pharmacy</p>
+                            <!-- <a th:href="@{/#}" class="primary-btn">SHOP NOW</a> -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Hero Section End -->
+
+    <!-- Categories Section Begin -->
+    <section class="categories" style="padding-bottom: 50px; padding-top: 0px;">
+        <div class="container">
+            <div class="product__discount">
+                <div class="section-title product__discount__title">
+                    <h4>Deal ngon mỗi ngày</h4>
+                    <a th:href="@{/sale}">Xem tất cả <i class="fa fa-angle-right"></i></a>
+                </div>
+                <div class="row">
+                    <div class="product__discount__slider owl-carousel">
+                        <div th:each="product,iterStat : ${productSaleList}" class="col-lg-4">
+                            <div class="product__discount__item" style="position: relative;">
+                                <a th:href="@{|/product-details/${product.productCode}-${product.productId}|}">
+                                    <div class="featured__item__pic set-bg" th:attr="data-setbg=@{|../images/category/${product.imageName}|}"></div>
+                                </a>
+                                <div class="featured__item__text">
+                                    <span th:text="${product.productId}" class="productItem_Id" style="display: none;"></span>
+                                    <h6 class="productItem_name"><a th:text="${product.productName}" th:href="@{|/product-details/${product.productCode}-${product.productId}|}"></a></h6>
+                                    <span th:text="${product.promotionFlag}" class="productItem_promotionFlag" style="display: none;"></span>
+                                    <span th:if="${product.promotionFlag} == 1" th:text="${product.promotionPrice}" class="productItem_promotionPrice"></span>
+                                    <span th:text="${product.price}" class="productItem_price"></span>
+                                    <div class="featured__item__pic__hover" style="bottom: 0px">
+                                        <a class="productItem_to_cart"><i class="fa fa-shopping-cart"></i> Thêm vào giỏ hàng</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Categories Section End -->
+
+    <!-- Featured Section Begin -->
+    <th:block th:if="${featuredProduct_1} != null">
+    <section class="featured featuredProduct_1" style="padding-bottom: 20px;">
+        <div class="container">
+            <div class="section-title product__discount__title">
+                <h4 th:text="${featuredProduct_1.categoryMain.categoryName}"></h4>
+                <a th:href="@{|/category/${featuredProduct_1.categoryMain.categoryCode}-${featuredProduct_1.categoryMain.categoryId}|}">Xem tất cả <i class="fa fa-angle-right"></i></a>
+            </div>
+            <div class="product__details__tab">
+                <ul class="nav nav-tabs" role="tablist">
+                	<th:block th:each="categorySub,iterStat : ${featuredProduct_1.categorySubList}">
+	                    <li class="nav-item">
+	                        <a th:text="${categorySub.categoryName}" th:href="@{|#${categorySub.categoryCode}|}"
+	                        	class="nav-link" data-toggle="tab" role="tab" aria-selected="true"></a>
+	                    </li>
+                	</th:block>
+                </ul>
+                <div class="tab-content">
+                	<th:block th:each="categorySub,iterStat : ${featuredProduct_1.categorySubList}">
+	                    <div th:id="${categorySub.categoryCode}" class="tab-pane" role="tabpanel">
+	                        <div class="product__details__tab__desc">
+	                            <div class="row featured__filter">
+	                            	<th:block th:each="product,iterStat : ${featuredProduct_1.productList}">
+		                                <div th:if="${product.categoryId} ==  ${categorySub.categoryId}" class="col-lg-3 col-md-4 col-6">
+		                                    <div class="featured__item">
+		                                        <a th:href="@{|/product-details/${product.productCode}-${product.productId}|}">
+				                                    <div class="featured__item__pic set-bg" th:attr="data-setbg=@{|../images/category/${product.imageName}|}"></div>
+				                                </a>
+		                                        <div class="featured__item__text">
+		                                        	<span th:text="${product.productId}" class="productItem_Id" style="display: none;"></span>
+		                                            <h6 class="productItem_name">
+				                                    	<a th:text="${product.productName}" th:href="@{|/product-details/${product.productCode}-${product.productId}|}"></a>
+				                                    </h6>
+				                                    <span th:text="${product.promotionFlag}" class="productItem_promotionFlag" style="display: none;"></span>
+				                                    <span th:if="${product.promotionFlag} == 1" th:text="${product.promotionPrice}" class="productItem_promotionPrice"></span>
+		                                            <span th:text="${product.price}" class="productItem_price"></span>
+		                                            <div class="featured__item__pic__hover" style="bottom: 0px">
+		                                                <a class="productItem_to_cart"><i class="fa fa-shopping-cart"></i> Thêm vào giỏ hàng</a>
+		                                            </div>
+		                                        </div>
+		                                    </div>
+		                                </div>
+	                            	</th:block>
+	                            </div>
+	                        </div>
+	                    </div>
+                	</th:block>
+                </div>
+            </div>
+        </div>
+    </section>
+    </th:block>
+    <!-- Featured Section End -->
+
+	<!-- Featured Section Begin -->
+	<th:block th:if="${featuredProduct_2} != null">
+    <section class="featured featuredProduct_2" style="padding-bottom: 20px;">
+        <div class="container">
+            <div class="section-title product__discount__title">
+                <h4 th:text="${featuredProduct_2.categoryMain.categoryName}"></h4>
+                <a th:href="@{|/category/${featuredProduct_2.categoryMain.categoryCode}-${featuredProduct_2.categoryMain.categoryId}|}">Xem tất cả <i class="fa fa-angle-right"></i></a>
+            </div>
+            <div class="product__details__tab">
+                <ul class="nav nav-tabs" role="tablist">
+                	<th:block th:each="categorySub,iterStat : ${featuredProduct_2.categorySubList}">
+	                    <li class="nav-item">
+	                        <a th:text="${categorySub.categoryName}" th:href="@{|#${categorySub.categoryCode}|}"
+	                        	class="nav-link" data-toggle="tab" role="tab" aria-selected="true"></a>
+	                    </li>
+                	</th:block>
+                </ul>
+                <div class="tab-content">
+                	<th:block th:each="categorySub,iterStat : ${featuredProduct_2.categorySubList}">
+	                    <div th:id="${categorySub.categoryCode}" class="tab-pane" role="tabpanel">
+	                        <div class="product__details__tab__desc">
+	                            <div class="row featured__filter">
+	                            	<th:block th:each="product,iterStat : ${featuredProduct_2.productList}">
+		                                <div th:if="${product.categoryId} ==  ${categorySub.categoryId}" class="col-lg-3 col-md-4 col-6">
+		                                    <div class="featured__item">
+		                                        <a th:href="@{|/product-details/${product.productCode}-${product.productId}|}">
+				                                    <div class="featured__item__pic set-bg" th:attr="data-setbg=@{|../images/category/${product.imageName}|}"></div>
+				                                </a>
+		                                        <div class="featured__item__text">
+		                                        	<span th:text="${product.productId}" class="productItem_Id" style="display: none;"></span>
+		                                            <h6 class="productItem_name">
+				                                    	<a th:text="${product.productName}" th:href="@{|/product-details/${product.productCode}-${product.productId}|}"></a>
+				                                    </h6>
+				                                    <span th:text="${product.promotionFlag}" class="productItem_promotionFlag" style="display: none;"></span>
+				                                    <span th:if="${product.promotionFlag} == 1" th:text="${product.promotionPrice}" class="productItem_promotionPrice"></span>
+		                                            <span th:text="${product.price}" class="productItem_price"></span>
+		                                            <div class="featured__item__pic__hover" style="bottom: 0px">
+		                                                <a class="productItem_to_cart"><i class="fa fa-shopping-cart"></i> Thêm vào giỏ hàng</a>
+		                                            </div>
+		                                        </div>
+		                                    </div>
+		                                </div>
+	                            	</th:block>
+	                            </div>
+	                        </div>
+	                    </div>
+                	</th:block>
+                </div>
+            </div>
+        </div>
+    </section>
+    </th:block>
+    <!-- Featured Section End -->
+
+    <!-- Banner Begin -->
+    <div class="banner" style="padding-bottom: 50px;">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6 col-md-6 col-sm-6">
+                    <div class="banner__pic">
+                        <img src="img/banner/banner-1.jpg" alt="">
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-6 col-sm-6">
+                    <div class="banner__pic">
+                        <img src="img/banner/banner-2.jpg" alt="">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Banner End -->
+
+    <!-- Latest Product Section Begin -->
+    <section class="latest-product" style="padding-bottom: 30px;">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 col-md-6">
+                    <div class="latest-product__text">
+                        <h4>Top bán chạy</h4>
+                        <div class="latest-product__slider owl-carousel">
+                            <div class="latest-product__slider__item">
+                                <div th:each="product,iterStat : ${productTopSaleList_1}" class="latest-product__item">
+                                    <div class="latest-product__item__pic">
+                                        <a th:href="@{|/product-details/${product.productCode}-${product.productId}|}">
+                                        	<img th:src="@{|../images/category/${product.imageName}|}" th:alt="${product.productName}" style="width: 117px;">
+                                        </a>
+                                    </div>
+                                    <div class="latest-product__item__text">
+                                    	<span th:text="${product.productId}" class="productItem_Id" style="display: none;"></span>
+                                    	<h6 class="productItem_name">
+	                                    	<a th:text="${product.productName}" th:href="@{|/product-details/${product.productCode}-${product.productId}|}"></a>
+	                                    </h6>
+	                                    <span th:text="${product.promotionFlag}" class="productItem_promotionFlag" style="display: none;"></span>
+	                                    <span th:if="${product.promotionFlag} == 1" th:text="${product.promotionPrice}" class="productItem_promotionPrice"></span>
+	                                    <span th:text="${product.price}" class="productItem_price"></span>
+                                        <div class="featured__item__pic__hover" style="bottom: 0px">
+                                            <a class="productItem_to_cart"><i class="fa fa-shopping-cart"></i> Thêm vào giỏ hàng</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div th:if="${productTopSaleList_2} != null" class="latest-product__slider__item">
+                                <div th:each="product,iterStat : ${productTopSaleList_2}" class="latest-product__item">
+                                    <div class="latest-product__item__pic">
+                                        <a th:href="@{|/product-details/${product.productCode}-${product.productId}|}">
+                                        	<img th:src="@{|../images/category/${product.imageName}|}" th:alt="${product.productName}" style="width: 117px;">
+                                        </a>
+                                    </div>
+                                    <div class="latest-product__item__text">
+                                    	<span th:text="${product.productId}" class="productItem_Id" style="display: none;"></span>
+                                    	<h6 class="productItem_name">
+	                                    	<a th:text="${product.productName}" th:href="@{|/product-details/${product.productCode}-${product.productId}|}"></a>
+	                                    </h6>
+	                                    <span th:text="${product.promotionFlag}" class="productItem_promotionFlag" style="display: none;"></span>
+	                                    <span th:if="${product.promotionFlag} == 1" th:text="${product.promotionPrice}" class="productItem_promotionPrice"></span>
+	                                    <span th:text="${product.price}" class="productItem_price"></span>
+                                        <div class="featured__item__pic__hover" style="bottom: 0px">
+                                            <a class="productItem_to_cart"><i class="fa fa-shopping-cart"></i> Thêm vào giỏ hàng</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6">
+                    <div class="latest-product__text">
+                        <h4>Top tìm kiếm</h4>
+                        <div class="latest-product__slider owl-carousel">
+                            <div class="latest-product__slider__item">
+                                <div th:each="product,iterStat : ${productTopSearchList_1}" class="latest-product__item">
+                                    <div class="latest-product__item__pic">
+                                        <a th:href="@{|/product-details/${product.productCode}-${product.productId}|}">
+                                        	<img th:src="@{|../images/category/${product.imageName}|}" th:alt="${product.productName}" style="width: 117px;">
+                                        </a>
+                                    </div>
+                                    <div class="latest-product__item__text">
+                                    	<span th:text="${product.productId}" class="productItem_Id" style="display: none;"></span>
+                                    	<h6 class="productItem_name">
+	                                    	<a th:text="${product.productName}" th:href="@{|/product-details/${product.productCode}-${product.productId}|}"></a>
+	                                    </h6>
+	                                    <span th:text="${product.promotionFlag}" class="productItem_promotionFlag" style="display: none;"></span>
+	                                    <span th:if="${product.promotionFlag} == 1" th:text="${product.promotionPrice}" class="productItem_promotionPrice"></span>
+	                                    <span th:text="${product.price}" class="productItem_price"></span>
+                                        <div class="featured__item__pic__hover" style="bottom: 0px">
+                                            <a class="productItem_to_cart"><i class="fa fa-shopping-cart"></i> Thêm vào giỏ hàng</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div th:if="${productTopSearchList_2} != null" class="latest-product__slider__item">
+                                <div th:each="product,iterStat : ${productTopSearchList_2}" class="latest-product__item">
+                                    <div class="latest-product__item__pic">
+                                        <a th:href="@{|/product-details/${product.productCode}-${product.productId}|}">
+                                        	<img th:src="@{|../images/category/${product.imageName}|}" th:alt="${product.productName}" style="width: 117px;">
+                                        </a>
+                                    </div>
+                                    <div class="latest-product__item__text">
+                                    	<span th:text="${product.productId}" class="productItem_Id" style="display: none;"></span>
+                                    	<h6 class="productItem_name">
+	                                    	<a th:text="${product.productName}" th:href="@{|/product-details/${product.productCode}-${product.productId}|}"></a>
+	                                    </h6>
+	                                    <span th:text="${product.promotionFlag}" class="productItem_promotionFlag" style="display: none;"></span>
+	                                    <span th:if="${product.promotionFlag} == 1" th:text="${product.promotionPrice}" class="productItem_promotionPrice"></span>
+	                                    <span th:text="${product.price}" class="productItem_price"></span>
+                                        <div class="featured__item__pic__hover" style="bottom: 0px">
+                                            <a class="productItem_to_cart"><i class="fa fa-shopping-cart"></i> Thêm vào giỏ hàng</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6">
+                    <div class="latest-product__text">
+                        <h4>Top sản phẩm mới</h4>
+                        <div class="latest-product__slider owl-carousel">
+                            <div class="latest-product__slider__item">
+                                <div th:each="product,iterStat : ${productTopNewList_1}" class="latest-product__item">
+                                    <div class="latest-product__item__pic">
+                                        <a th:href="@{|/product-details/${product.productCode}-${product.productId}|}">
+                                        	<img th:src="@{|../images/category/${product.imageName}|}" th:alt="${product.productName}" style="width: 117px;">
+                                        </a>
+                                    </div>
+                                    <div class="latest-product__item__text">
+                                    	<span th:text="${product.productId}" class="productItem_Id" style="display: none;"></span>
+                                    	<h6 class="productItem_name">
+	                                    	<a th:text="${product.productName}" th:href="@{|/product-details/${product.productCode}-${product.productId}|}"></a>
+	                                    </h6>
+	                                    <span th:text="${product.promotionFlag}" class="productItem_promotionFlag" style="display: none;"></span>
+	                                    <span th:if="${product.promotionFlag} == 1" th:text="${product.promotionPrice}" class="productItem_promotionPrice"></span>
+	                                    <span th:text="${product.price}" class="productItem_price"></span>
+                                        <div class="featured__item__pic__hover" style="bottom: 0px">
+                                            <a class="productItem_to_cart"><i class="fa fa-shopping-cart"></i> Thêm vào giỏ hàng</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div th:if="${productTopNewList_2} != null" class="latest-product__slider__item">
+                                <div th:each="product,iterStat : ${productTopNewList_2}" class="latest-product__item">
+                                    <div class="latest-product__item__pic">
+                                        <a th:href="@{|/product-details/${product.productCode}-${product.productId}|}">
+                                        	<img th:src="@{|../images/category/${product.imageName}|}" th:alt="${product.productName}" style="width: 117px;">
+                                        </a>
+                                    </div>
+                                    <div class="latest-product__item__text">
+                                    	<span th:text="${product.productId}" class="productItem_Id" style="display: none;"></span>
+                                    	<h6 class="productItem_name">
+	                                    	<a th:text="${product.productName}" th:href="@{|/product-details/${product.productCode}-${product.productId}|}"></a>
+	                                    </h6>
+	                                    <span th:text="${product.promotionFlag}" class="productItem_promotionFlag" style="display: none;"></span>
+	                                    <span th:if="${product.promotionFlag} == 1" th:text="${product.promotionPrice}" class="productItem_promotionPrice"></span>
+	                                    <span th:text="${product.price}" class="productItem_price"></span>
+                                        <div class="featured__item__pic__hover" style="bottom: 0px">
+                                            <a class="productItem_to_cart"><i class="fa fa-shopping-cart"></i> Thêm vào giỏ hàng</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Latest Product Section End -->
+
+    <!-- Blog Section Begin -->
+    <section class="from-blog" style="padding-bottom: 30px;">
+        <div class="container">
+            <div class="section-title product__discount__title">
+                <h4>Góc chia sẻ, mẹo vặt</h4>
+                <a th:href="@{/blog}">Xem tất cả <i class="fa fa-angle-right"></i></a>
+            </div>
+            <div class="row">
+                <div th:each="viewBlog,iterStat : ${viewBlogList}" class="col-lg-4 col-md-4 col-sm-6">
+                    <div class="blog__item">
+                        <div class="blog__item__pic">
+                        	<a th:href="@{|/blog-details/${viewBlog.titleCode}-${viewBlog.blogId}|}"><img th:src="@{|../images/blog/${viewBlog.Name}|}" th:attr="alt=@{|${viewBlog.Title}|}" style="width: 360px; height: 260px;"></a>
+                        </div>
+                        <div class="blog__item__text">
+                            <ul>
+                                <li><i class="fa fa-calendar-o"></i>&nbsp;&nbsp;<span th:text="${#calendars.format(viewBlog.updatedDate, 'dd-MM-yyyy')}"></span></li>
+                            </ul>
+                            <h5><a th:href="@{|/blog-details/${viewBlog.titleCode}-${viewBlog.blogId}|}" th:text="${viewBlog.title}"></a></h5>
+                            <p style="display: none;" th:text="${viewBlog.content}" class="content__blogDetails__hide"></p>
+                            <div class="blogList__content" style="margin-bottom: 15px;"></div>
+                            <a th:href="@{|/blog-details/${viewBlog.titleCode}-${viewBlog.blogId}|}" class="blog__btn">Xem thêm <span class="arrow_right"></span></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Blog Section End -->
+
+    <th:block th:include="/_footer"></th:block>
+
+    <!-- Js Plugins -->
+    <script src="js/jquery-3.3.1.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/jquery.slicknav.js"></script>
+    <script src="js/owl.carousel.min.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/save-data.js"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="Thiên Lộc pharmacy">
+    <meta name="keywords" content="thien loc, thiên lộc, Thiên Lộc pharmacy">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title th:text="${category.categoryName}"></title>
+
+    <!-- Google Font -->
+    <!-- <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;600;900&display=swap" rel="stylesheet"> -->
+
+    <!-- Css Styles -->
+    <link rel="stylesheet" href="../css/bootstrap.min.css" type="text/css">
+    <link rel="stylesheet" href="../css/font-awesome.min.css" type="text/css">
+    <link rel="stylesheet" href="../css/elegant-icons.css" type="text/css">
+    <link rel="stylesheet" href="../css/slicknav.min.css" type="text/css">
+    <link rel="stylesheet" href="../css/style.css" type="text/css">
+</head>
+
+<body>
+   <th:block th:include="/_header"></th:block>
+   <div id='snackbar'><span><i class='fa fa-check'></i> Thêm sản phẩm thành công</span></div>
+    <!-- Breadcrumb Section Begin -->
+    <section class="breadcrumb-section set-bg" data-setbg="../images/banner/breadcrumb.jpg">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <div class="breadcrumb__text">
+                        <h3 th:text="${category.categoryName}"></h3>
+                        <div class="breadcrumb__option">
+                            <a href="/">Trang chủ</a> 
+                            <th:block th:if="${category.categoryType} == 1">
+                            	<span>&nbsp;ー&nbsp;<th:block th:text="${category.categoryName}" /></span>
+                            </th:block>
+                            <th:block th:if="${category.categoryType} == 2">
+                            	&nbsp;ー&nbsp;<a th:href="@{|/category/${categoryMain.categoryCode}-${categoryMain.categoryId}|}"><th:block th:text="${categoryMain.categoryName}" /></a>
+								<span>&nbsp;ー&nbsp;<th:block th:text="${category.categoryName}" /></span>
+                            </th:block>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Breadcrumb Section End -->
+
+    <!-- Product Section Begin -->
+    <section class="product spad">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3 col-md-5">
+                    <div class="sidebar">
+                        <div class="sidebar__item">
+                            <h4>Danh mục</h4>
+                            <ul class="sidebar__category">
+                            	<li th:if="${categoryMain.categoryType} == 1"><a class="main_link" th:href="@{|/category/${categoryMain.categoryCode}-${categoryMain.categoryId}|}" th:text="${categoryMain.categoryName}"></a></li>
+                            	<th:block th:each="categorySub,iterStat : ${categoryList}" th:if="${categorySub.categoryParentId} == ${categoryMain.categoryId}">
+                            		<li><a class="sub_link" th:href="@{|/category/${categorySub.categoryCode}-${categorySub.categoryId}|}" th:text="${categorySub.categoryName}"></a></li>
+                            	</th:block>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-9 col-md-7">
+                    <div class="filter__item">
+                        <div class="row">
+                            <div class="col-lg-4 col-md-5">
+                                <div class="filter__sort">
+                                    <!--<select>
+                                    	<option value="0">Sắp xếp</option>
+                                        <option value="1">Giá tăng dần</option>
+                                        <option value="2">Giá giảm dần</option>
+                                        <option value="3">Mới nhất</option>
+                                    </select>-->
+                                    <div class="dropdown" style="display: inline-block;">
+										<button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown">Sắp xếp</button>
+									  	<ul class="dropdown-menu" aria-labelledby="dropdownMenu1" style="min-width: 9rem;">
+										    <li><a th:href="@{|?order_by=price&sort_by=ASC|}">Giá tăng dần</a></li>
+										    <li><a th:href="@{|?order_by=price&sort_by=DESC|}">Giá giảm dần</a></li>
+										    <li><a th:href="@{|?order_by=date&sort_by=DESC|}">Mới nhất</a></li>
+									  	</ul>
+									</div>
+                                </div>
+                            </div>
+                            <div class="col-lg-4 col-md-4">
+                                <div class="filter__found">
+                                    <h6><span th:text="${#lists.size(productList)}"></span> sản phẩm</h6>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row featured__filter" id="content">
+                        <div th:each="product,iterStat : ${productList}" class="col-lg-4 col-md-6 col-6">
+                            <div class="featured__item">
+                                <a th:href="@{|/product-details/${product.productCode}-${product.productId}|}">
+                                    <div class="featured__item__pic set-bg" th:attr="data-setbg=@{|../images/category/${product.imageName}|}"></div>
+                                </a>
+                                <div class="featured__item__text">
+                                	<span th:text="${product.productId}" class="productItem_Id" style="display: none;"></span>
+                                    <h6 class="productItem_name">
+                                    	<a th:text="${product.productName}" th:href="@{|/product-details/${product.productCode}-${product.productId}|}"></a>
+                                    </h6>
+                                    <span th:text="${product.promotionFlag}" class="productItem_promotionFlag" style="display: none;"></span>
+		                            <span th:if="${product.promotionFlag} == 1" th:text="${product.promotionPrice}" class="productItem_promotionPrice"></span>
+		                            <span th:text="${product.price}" class="productItem_price"></span>
+                                    <div class="featured__item__pic__hover" style="bottom: 0px">
+                                        <a class="productItem_to_cart"><i class="fa fa-shopping-cart"></i> Thêm vào giỏ hàng</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row" style="padding-top: 20px;">
+		                <div class="col-lg-12">
+		                    <div id="page_navigation" class="product__pagination blog__pagination"></div>
+		                </div>
+		            </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Product Section End -->
+
+	<th:block th:include="/_footer"></th:block>
+
+    <!-- Js Plugins -->
+    <script src="../js/jquery-3.3.1.min.js"></script>
+    <script src="../js/bootstrap.min.js"></script>
+    <script src="../js/jquery.slicknav.js"></script>
+    <script src="../js/owl.carousel.min.js"></script>
+    <script src="../js/main.js"></script>
+    <script src="../js/save-data.js"></script>
+    <script src="../js/page_navigation.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
+	<script src="../js/category.js"></script>
+			
+</body>
+
+</html>

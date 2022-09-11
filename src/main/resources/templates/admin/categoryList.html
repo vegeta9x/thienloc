@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+	    <meta charset="UTF-8">
+	    <meta name="description" content="Thiên Lộc pharmacy">
+	    <meta name="keywords" content="thien loc, thiên lộc, Thiên Lộc pharmacy">
+	    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+	    <title>Quản lý danh sách danh mục</title>
+	
+	    <!-- Google Font -->
+	    <!-- <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;600;900&display=swap" rel="stylesheet"> -->
+	
+	    <!-- Css Styles -->
+	    <link rel="stylesheet" href="../css/bootstrap.min.css" type="text/css">
+	    <link rel="stylesheet" href="../css/font-awesome.min.css" type="text/css">
+	    <link rel="stylesheet" href="../css/jquery-ui.min.css" type="text/css">
+	    <link rel="stylesheet" href="../css/style.css" type="text/css">
+	    
+	    <style>
+			.header__top a {
+		      	color: #007bff;
+		      	font-size: 16px;
+		    }
+	    </style>
+	</head>
+	
+	<body>
+	    <div class="container admin__page">
+	    	<th:block th:include="/admin/_header"></th:block>
+        	<div class="row">
+		        <div class="col-12">
+		            <div class="section-title__admin">
+		                <h4>Danh sách danh mục</h4>
+		            </div>
+		        </div>
+	        </div>
+	    	<div class="row">
+	    		<div class="col-lg-12">
+	    			<p>Lưu ý 1: 2 danh mục chính đầu tiên sẽ hiển thị ở màn hình trang chủ</p>
+	    			<p>Lưu ý 2: Chọn danh mục phụ sẽ hiển thị ở màn hình trang chủ</p>
+                    <a th:href="@{/admin/newCategory}" style="float: right; margin-bottom: 20px;">Tạo danh mục mới</a>
+	    			<table class="table">
+						<thead>
+						    <tr>
+								<th scope="col" style="width: 50%;">Danh mục</th>
+								<th scope="col" style="width: 15%;">Thứ tự</th>
+								<th scope="col" style="width: 15%;">Xuất bản</th>
+								<th scope="col" style="width: 20%;">Tác vụ</th>
+						    </tr>
+					  	</thead>
+						<tbody>
+						    <tr th:each="category : ${categoryList}">
+								<td th:text="${category.categoryType}" style="display: none;" class="categoryType"></td>
+								<td th:text="${category.categoryName}" class="categoryName"></td>
+								<td th:text="${category.sort}" class="categorySort"></td>
+								<td th:text="${category.display}" class="categoryDisplayCode" style="display: none;"></td>
+								<td th:if="${category.display} == 1" class="categoryDisplay">Có</td>
+								<td th:if="${category.display} != 1" class="categoryDisplay">Không</td>
+								<td>
+									<a th:href="@{|/admin/category?categoryId=${category.categoryId}|}" class="edit"><i class="fa fa-edit"></i> sửa</a> &nbsp;&nbsp;|&nbsp;&nbsp; 
+					      			<a th:href="@{|/admin/deleteCategory?categoryId=${category.categoryId}|}" class="delete"><i class="fa fa-trash"></i> xoá</a>
+								</td>
+						    </tr>
+						    <tr th:if="${#lists.isEmpty(categoryList)}"><td colspan="3">Không có dữ liệu</td></tr>
+						</tbody>
+					</table>
+	    		</div>
+	    	</div>
+	    </div>
+		
+		<!-- Js Plugins -->
+		<script src="../js/jquery-3.3.1.min.js"></script>
+		<script src="../js/bootstrap.min.js"></script>
+		<script src="../js/jquery-ui.min.js"></script>
+		<script>
+			$(document).ready(function() {
+				var count = 0;
+				$( ".categoryType" ).each(function(index) {
+					if($(this).text() == 2) {
+						$('.categoryName').eq(index).css("padding-left", "40px");
+						$('.categorySort').eq(index).css("padding-left", "40px");
+					} else {
+						$('.categoryName').eq(index).css("font-weight", "700");
+						$('.categorySort').eq(index).css("font-weight", "700");
+						if(count < 2) {
+							$('.categoryDisplay').eq(index).html("Có");
+							count ++;
+						}
+							
+					}
+				});
+				$('.delete').click(function() {
+			       if(confirm("Tất cả sản phẩm trong danh mục này cũng bị xoá.\nBạn có chắc chắn muốn xoá ?"))
+			        {
+			            return true;
+			        }        
+			        return false;
+			    });
+			});
+		</script>
+	</body>
+</html>

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+	    <meta charset="UTF-8">
+	    <meta name="description" content="Thiên Lộc pharmacy">
+	    <meta name="keywords" content="thien loc, thiên lộc, Thiên Lộc pharmacy">
+	    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+	    <title>Thiên Lộc pharmacy</title>
+	
+	    <!-- Google Font -->
+	    <!-- <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;600;900&display=swap" rel="stylesheet"> -->
+	
+	    <!-- Css Styles -->
+	    <link rel="stylesheet" href="../css/bootstrap.min.css" type="text/css">
+	    <link rel="stylesheet" href="../css/font-awesome.min.css" type="text/css">
+	    <link rel="stylesheet" href="../css/jquery-ui.min.css" type="text/css">
+	    <link rel="stylesheet" href="../css/style.css" type="text/css">
+	</head>
+	
+	<body>
+		<div class="container admin_login">
+			<div class="row justify-content-md-center">
+				<div class="col-lg-6">
+					<div class="text-center" style="margin: 40px 0px;">
+				    	<img src="../img/thienloc-pharmacy-header.jpeg" class="avatar">
+				  	</div>
+				  	<th:block th:if="${#session != null && #session.getAttribute('SPRING_SECURITY_LAST_EXCEPTION') != null}">
+			             <div th:if= "${#request.getParameter('error') == 'true'}"
+			                style="color: red; margin: 10px 0px;">
+			                Đăng nhập thất bại !<br /> Tên đăng nhập hoặc mật khẩu bị sai.
+			                <!--<span th:utext="${#session.getAttribute('SPRING_SECURITY_LAST_EXCEPTION').message}"></span> -->
+			             </div>
+			        </th:block>
+					<form method="POST" th:action="@{/j_spring_security_check}">
+						<div class="form-group">
+					    	<label for="exampleInputEmail1">Tên đăng nhập <span>*</span></label>
+					    	<input type="email" class="form-control userName" name="userName" placeholder="username">
+					  	</div>
+					  	<div class="form-group">
+					    	<label for="exampleInputPassword1">Mật khẩu *</label>
+					    	<input type="password" class="form-control password" name="password" placeholder="password">
+					  	</div>
+					 	 <button type="submit" value="Login" class="btn btn-primary login">Đăng nhập</button>
+					</form>
+					<span class="error-message" th:utext="${error}"></span>
+				</div>
+			</div>
+		</div>
+		
+		<!-- Js Plugins -->
+		<script src="../js/jquery-3.3.1.min.js"></script>
+		<script src="../js/bootstrap.min.js"></script>
+		<script src="../js/jquery-ui.min.js"></script>
+	</body>
+</html>

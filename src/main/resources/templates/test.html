@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="Thiên Lộc pharmacy">
+    <meta name="keywords" content="thien loc, thiên lộc, Thiên Lộc pharmacy">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Chia sẻ, mẹo vặt</title>
+
+    <!-- Google Font -->
+    <!-- <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;600;900&display=swap" rel="stylesheet"> -->
+
+    <!-- Css Styles -->
+    <link rel="stylesheet" href="css/bootstrap.min.css" type="text/css">
+    <link rel="stylesheet" href="css/font-awesome.min.css" type="text/css">
+    <link rel="stylesheet" href="css/elegant-icons.css" type="text/css">
+    <link rel="stylesheet" href="css/nice-select.css" type="text/css">
+    <link rel="stylesheet" href="css/jquery-ui.min.css" type="text/css">
+    <link rel="stylesheet" href="css/owl.carousel.min.css" type="text/css">
+    <link rel="stylesheet" href="css/slicknav.min.css" type="text/css">
+    <link rel="stylesheet" href="css/style.css" type="text/css">
+</head>
+
+<body>
+   <th:block th:include="/_header"></th:block>
+
+    <!-- Breadcrumb Section Begin -->
+    <section class="breadcrumb-section set-bg" data-setbg="/images/banner/breadcrumb.jpg">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <div class="breadcrumb__text">
+                        <h3>Chia sẻ, mẹo vặt</h3>
+                        <div class="breadcrumb__option">
+                            <a href="/">Trang chủ</a> &nbsp;ー&nbsp;
+                            <span>Chia sẻ, mẹo vặt</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Breadcrumb Section End -->
+
+    <!-- Blog Section Begin -->
+    <section class="blog spad" style="padding-top: 60px;">
+        <div class="container">
+            <div class="row">
+            	
+			    <input type='hidden' id='current_page' />
+			    <input type='hidden' id='show_per_page' />
+			    <div id='content'>
+			        <a href="#" class="blog__btn">Xem thêm <span class="arrow_right"></span></a>
+			        <a href="#" class="blog__btn">Xem thêm <span class="arrow_right"></span></a>
+			        <a href="#" class="blog__btn">Xem thêm <span class="arrow_right"></span></a>
+			        <a href="#" class="blog__btn">Xem thêm <span class="arrow_right"></span></a>
+			        <a href="#" class="blog__btn">Xem thêm <span class="arrow_right"></span></a>
+			        <a href="#" class="blog__btn">Xem thêm <span class="arrow_right"></span></a>
+			        <p>Nội dung 11</p>
+			        <p>Nội dung 12</p>
+			        <p>Nội dung 13</p>
+			        <p>Nội dung 14</p>
+			        <p>Nội dung 15</p>
+			        <p>Nội dung 16</p>
+			        <p>Nội dung 17</p>
+			        <p>Nội dung 18</p>
+			    </div>
+			    <div class="col-lg-12">
+            		<div id="page_navigation" class="product__pagination blog__pagination">
+            			
+            		</div>
+            	</div>
+            </div>
+        </div>
+    </section>
+    <!-- Blog Section End -->
+
+	<th:block th:include="/_footer"></th:block>
+
+    <!-- Js Plugins -->
+    <script src="js/jquery-3.3.1.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/jquery.nice-select.min.js"></script>
+    <script src="js/jquery-ui.min.js"></script>
+    <script src="js/jquery.slicknav.js"></script>
+    <script src="js/mixitup.min.js"></script>
+    <script src="js/owl.carousel.min.js"></script>
+    <script src="js/main.js"></script>
+    
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
+    
+	<script type='text/javascript'>
+    	$(document).ready(function(){
+		    var show_per_page = 5;
+		    var number_of_items = $('#content').children().size();
+		    var number_of_pages = Math.ceil(number_of_items/show_per_page);
+		
+		    $('#current_page').val(0);
+		    $('#show_per_page').val(show_per_page);
+		
+		    var navigation_html = '<a class="previous_link" href="javascript:previous();">«</a>';
+		
+		    var current_link = 0;
+		    while (number_of_pages > current_link){
+		        navigation_html += '<a class="page_link" href="javascript:go_to_page(' + current_link +')" longdesc="' + current_link +'">'+ (current_link + 1) +'</a>';
+		        current_link++;
+		    }
+		    navigation_html += '<a class="next_link" href="javascript:next();">»</a>';
+		
+		    $('#page_navigation').html(navigation_html);
+		
+		    $('#page_navigation .page_link:first').addClass('active_page');
+		
+		    $('#content').children().css('display', 'none');
+		
+		    $('#content').children().slice(0, show_per_page).css('display', 'block');
+		
+		});
+		
+		function previous(){
+		    new_page = parseInt($('#current_page').val()) - 1;
+		    if($('.active_page').prev('.page_link').length==true){
+		        go_to_page(new_page);
+		    }
+		}
+		
+		function next(){
+		    new_page = parseInt($('#current_page').val()) + 1;
+		    if($('.active_page').next('.page_link').length==true){
+		        go_to_page(new_page);
+		    }
+		}
+		function go_to_page(page_num){
+		    var show_per_page = parseInt($('#show_per_page').val());
+		    start_from = page_num * show_per_page;
+		    end_on = start_from + show_per_page;
+		
+		    $('#content').children().css('display', 'none').slice(start_from, end_on).css('display', 'block');
+		    $('.page_link[longdesc=' + page_num +']').addClass('active_page').siblings('.active_page').removeClass('active_page');
+		    $('#current_page').val(page_num);
+		}
+	</script>
+</body>
+
+</html>

@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="Thiên Lộc pharmacy">
+    <meta name="keywords" content="thien loc, thiên lộc, Thiên Lộc pharmacy">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Giỏ hàng</title>
+
+    <!-- Google Font -->
+    <!-- <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;600;900&display=swap" rel="stylesheet"> -->
+
+    <!-- Css Styles -->
+    <link rel="stylesheet" href="css/bootstrap.min.css" type="text/css">
+    <link rel="stylesheet" href="css/font-awesome.min.css" type="text/css">
+    <link rel="stylesheet" href="css/elegant-icons.css" type="text/css">
+    <link rel="stylesheet" href="css/slicknav.min.css" type="text/css">
+    <link rel="stylesheet" href="css/style.css" type="text/css">
+</head>
+
+<body>
+    <th:block th:include="/_header"></th:block>
+
+    <!-- Breadcrumb Section Begin -->
+    <section class="breadcrumb-section set-bg" data-setbg="../images/banner/breadcrumb.jpg">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <div class="breadcrumb__text">
+                        <h3>Giỏ hàng</h3>
+                        <div class="breadcrumb__option">
+                            <a href="/">Trang chủ</a> &nbsp;ー&nbsp;
+                            <span>Giỏ hàng</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Breadcrumb Section End -->
+
+    <!-- Shoping Cart Section Begin -->
+    <section class="shoping-cart spad">
+        <div class="container">
+            <div class="shoping__cart__table">
+                <div class="info-cart">
+                    <div class="shoping__cart__btns empty-cart" style="display: none;">
+                        <p>Không có sản phẩm nào trong giỏ hàng của bạn.</p>
+                        <p><i class="fa fa-shopping-bag"></i></p>
+                        <a href="/" class="primary-btn cart-btn">Tiếp tục mua sắm</a>
+                    </div>
+                    
+                    <div class="filter__found" style="text-align: left; ">
+                        <h6><span></span> sản phẩm</h6>
+                    </div>
+                </div>
+            </div>
+            <div class="row shoping-cart-footer">
+                <div class="col-lg-6">
+                    <div class="shoping__cart__btns">
+                        <a href="/" class="primary-btn cart-btn">Tiếp tục mua sắm</a>
+                    </div>
+                    <div class="shoping__continue">
+                        <div class="shoping__discount footer__widget">
+                            <h5>Mã giảm giá</h5>
+                            <div>
+                                <input type="text" class="discount" placeholder="Nhập coupon">
+                                <button type="submit" class="site-btn discount">Áp dụng</button>
+                            </div>
+                            <p class="discount-notice"></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="shoping__checkout">
+                        <ul>
+                            <li class="cart__order__subtotal" style="padding-bottom: 0px;">Tạm tính <span></span></li>
+                            <li class="cart__order__coupon" style="border-bottom: 1px solid #ebebeb;">Mã giảm giá<span class="coupon"></span></li>
+                            <li class="cart__order__total">Thành tiền <span></span></li>
+                        </ul>
+                        <a th:href="@{/checkout}" class="primary-btn">Tiến hành thanh toán</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Shoping Cart Section End -->
+
+    <th:block th:include="/_footer"></th:block>
+
+    <!-- Js Plugins -->
+    <script src="js/jquery-3.3.1.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/jquery.slicknav.js"></script>
+    <script src="js/owl.carousel.min.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/shopping-cart.js"></script>
+
+</body>
+
+</html>
