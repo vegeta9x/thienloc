@@ -44,6 +44,10 @@ public class ProductBean {
     public ProductBean(@NonNull @Lazy CategoryBean categoryBean) {    
         this.categoryBean = categoryBean;  
     }
+    
+    public void updateProduct(Product product) {
+    	productMapper.updateByPrimaryKey(product);
+    }
 	
 	public Product findProductById(Long productId) {
 		ProductExample example = new ProductExample();
@@ -125,6 +129,9 @@ public class ProductBean {
 		} else {
 			categoryIdList.add(category.getCategoryId());
 		}
+		
+		if(categoryIdList.size() == 0)
+			return null;
 		
 		result = productMapper.selectAllByCategoryId(categoryIdList, orderBy, sort, displayFlag, limitFlag);
 		
@@ -297,6 +304,15 @@ public class ProductBean {
 			
 			productMapper.updateByPrimaryKey(product);
 		}
+	}
+
+	public boolean checkQuantity(int quantityCheck) {
+		ProductExample example = new ProductExample();
+		example.createCriteria()
+			.andDeletedFlagEqualTo(Flag.OFF.getCode())
+			.andQuantityLessThanOrEqualTo(quantityCheck);
+		
+		return productMapper.countByExample(example) > 0 ? true : false;
 	}
 	
 }

@@ -34,7 +34,7 @@
     <div class="humberger__menu__overlay"></div>
     <div class="humberger__menu__wrapper">
         <div class="humberger__menu__logo">
-            <a href="/"><img src="img/thienloc-pharmacy-header.jpeg" alt="thiên lộc pharmacy" height="69px"></a>
+            <a href="/"><img src="images/logo/thienloc-pharmacy.png" alt="thiên lộc pharmacy" height="69px"></a>
         </div>
         <div class="humberger__menu__cart">
             <ul>
@@ -52,9 +52,9 @@
         </nav>
         <div id="mobile-menu-wrap"></div>
         <div class="header__top__right__social">
-            <a th:href="@{/#}"><img src="img/svg/facebook.svg" alt="facebook"></a>
-            <a th:href="@{/#}"><img src="img/svg/zalo.svg" alt="zalo"></a>
-            <a th:href="@{/#}"><img src="img/svg/tiktok.svg" alt="tiktok"></a>
+            <a th:href="@{/#}"><img src="images/svg/facebook.svg" alt="facebook"></a>
+            <a th:href="@{/#}"><img src="images/svg/zalo.svg" alt="zalo"></a>
+            <a th:href="@{/#}"><img src="images/svg/tiktok.svg" alt="tiktok"></a>
         </div>
         <div class="humberger__menu__contact">
             <ul>
@@ -81,9 +81,9 @@
                     <div class="col-lg-6 col-md-6">
                         <div class="header__top__right">
                             <div class="header__top__right__social">
-                                <a th:href="@{/#}"><img src="img/svg/facebook.svg" alt="facebook"></a>
-                                <a th:href="@{/#}"><img src="img/svg/zalo.svg" alt="zalo"></a>
-                                <a th:href="@{/#}"><img src="img/svg/tiktok.svg" alt="tiktok"></a>
+                                <a th:href="@{/#}"><img src="images/svg/facebook.svg" alt="facebook"></a>
+                                <a th:href="@{/#}"><img src="images/svg/zalo.svg" alt="zalo"></a>
+                                <a th:href="@{/#}"><img src="images/svg/tiktok.svg" alt="tiktok"></a>
                             </div>
                         </div>
                     </div>
@@ -94,7 +94,7 @@
             <div class="row">
                 <div class="col-lg-3">
                     <div class="header__logo">
-                        <a href="/"><img src="img/thienloc-pharmacy-header.jpeg" alt="thiên lộc pharmacy" height="69px"></a>
+                        <a href="/"><img src="images/logo/thienloc-pharmacy.png" alt="thiên lộc pharmacy" height="69px"></a>
                     </div>
                 </div>
                 <div class="col-lg-6">
@@ -165,13 +165,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="hero__item set-bg" data-setbg="../images/banner/banner.jpg">
-                        <div class="hero__text">
-                            <span>Vì sức khoẻ mọi nhà</span>
-                            <h2>Thiên Lộc</h2>
-                            <p>Pharmacy</p>
-                            <!-- <a th:href="@{/#}" class="primary-btn">SHOP NOW</a> -->
-                        </div>
+                    <div class="hero__item set-bg" th:attr="data-setbg=@{|../images/banner/${banner}|}">
                     </div>
                 </div>
             </div>
@@ -180,6 +174,7 @@
     <!-- Hero Section End -->
 
     <!-- Categories Section Begin -->
+    <th:block th:if="${#lists.size(productSaleList)} > 0">
     <section class="categories" style="padding-bottom: 50px; padding-top: 0px;">
         <div class="container">
             <div class="product__discount">
@@ -201,7 +196,12 @@
                                     <span th:if="${product.promotionFlag} == 1" th:text="${product.promotionPrice}" class="productItem_promotionPrice"></span>
                                     <span th:text="${product.price}" class="productItem_price"></span>
                                     <div class="featured__item__pic__hover" style="bottom: 0px">
-                                        <a class="productItem_to_cart"><i class="fa fa-shopping-cart"></i> Thêm vào giỏ hàng</a>
+                                    	<th:block th:if="${product.quantity} > 0">
+	                                    	<a class="productItem_to_cart"><i class="fa fa-shopping-cart"></i> Thêm vào giỏ hàng</a>
+	                                    </th:block>
+	                                    <th:block th:if="${product.quantity} < 1">
+	                                    	<p class="out_off_product" style="color: #ffffff;">Hết hàng</p>
+	                                    </th:block>
                                     </div>
                                 </div>
                             </div>
@@ -212,6 +212,7 @@
             </div>
         </div>
     </section>
+    </th:block>
     <!-- Categories Section End -->
 
     <!-- Featured Section Begin -->
@@ -251,7 +252,12 @@
 				                                    <span th:if="${product.promotionFlag} == 1" th:text="${product.promotionPrice}" class="productItem_promotionPrice"></span>
 		                                            <span th:text="${product.price}" class="productItem_price"></span>
 		                                            <div class="featured__item__pic__hover" style="bottom: 0px">
-		                                                <a class="productItem_to_cart"><i class="fa fa-shopping-cart"></i> Thêm vào giỏ hàng</a>
+		                                                <th:block th:if="${product.quantity} > 0">
+		                                                	<a class="productItem_to_cart"><i class="fa fa-shopping-cart"></i> Thêm vào giỏ hàng</a>
+		                                                </th:block>
+		                                                <th:block th:if="${product.quantity} < 1">
+		                                                	<p class="out_off_product" style="color: #ffffff;">Hết hàng</p>
+		                                                </th:block>
 		                                            </div>
 		                                        </div>
 		                                    </div>
@@ -305,7 +311,12 @@
 				                                    <span th:if="${product.promotionFlag} == 1" th:text="${product.promotionPrice}" class="productItem_promotionPrice"></span>
 		                                            <span th:text="${product.price}" class="productItem_price"></span>
 		                                            <div class="featured__item__pic__hover" style="bottom: 0px">
-		                                                <a class="productItem_to_cart"><i class="fa fa-shopping-cart"></i> Thêm vào giỏ hàng</a>
+		                                                <th:block th:if="${product.quantity} > 0">
+					                                    	<a class="productItem_to_cart"><i class="fa fa-shopping-cart"></i> Thêm vào giỏ hàng</a>
+					                                    </th:block>
+					                                    <th:block th:if="${product.quantity} < 1">
+					                                    	<p class="out_off_product" style="color: #ffffff;">Hết hàng</p>
+					                                    </th:block>
 		                                            </div>
 		                                        </div>
 		                                    </div>
@@ -328,12 +339,12 @@
             <div class="row">
                 <div class="col-lg-6 col-md-6 col-sm-6">
                     <div class="banner__pic">
-                        <img src="img/banner/banner-1.jpg" alt="">
+                        <img th:src="@{|images/banner/${bannerSub1}|}" alt="">
                     </div>
                 </div>
                 <div class="col-lg-6 col-md-6 col-sm-6">
                     <div class="banner__pic">
-                        <img src="img/banner/banner-2.jpg" alt="">
+                        <img th:src="@{|images/banner/${bannerSub2}|}" alt="">
                     </div>
                 </div>
             </div>
@@ -365,7 +376,12 @@
 	                                    <span th:if="${product.promotionFlag} == 1" th:text="${product.promotionPrice}" class="productItem_promotionPrice"></span>
 	                                    <span th:text="${product.price}" class="productItem_price"></span>
                                         <div class="featured__item__pic__hover" style="bottom: 0px">
-                                            <a class="productItem_to_cart"><i class="fa fa-shopping-cart"></i> Thêm vào giỏ hàng</a>
+                                        	<th:block th:if="${product.quantity} > 0">
+		                                    	<a class="productItem_to_cart"><i class="fa fa-shopping-cart"></i> Thêm vào giỏ hàng</a>
+		                                    </th:block>
+		                                    <th:block th:if="${product.quantity} < 1">
+		                                    	<p class="out_off_product" style="color: #ffffff;">Hết hàng</p>
+		                                    </th:block>
                                         </div>
                                     </div>
                                 </div>
@@ -386,7 +402,12 @@
 	                                    <span th:if="${product.promotionFlag} == 1" th:text="${product.promotionPrice}" class="productItem_promotionPrice"></span>
 	                                    <span th:text="${product.price}" class="productItem_price"></span>
                                         <div class="featured__item__pic__hover" style="bottom: 0px">
-                                            <a class="productItem_to_cart"><i class="fa fa-shopping-cart"></i> Thêm vào giỏ hàng</a>
+                                            <th:block th:if="${product.quantity} > 0">
+		                                    	<a class="productItem_to_cart"><i class="fa fa-shopping-cart"></i> Thêm vào giỏ hàng</a>
+		                                    </th:block>
+		                                    <th:block th:if="${product.quantity} < 1">
+		                                    	<p class="out_off_product" style="color: #ffffff;">Hết hàng</p>
+		                                    </th:block>
                                         </div>
                                     </div>
                                 </div>
@@ -414,7 +435,12 @@
 	                                    <span th:if="${product.promotionFlag} == 1" th:text="${product.promotionPrice}" class="productItem_promotionPrice"></span>
 	                                    <span th:text="${product.price}" class="productItem_price"></span>
                                         <div class="featured__item__pic__hover" style="bottom: 0px">
-                                            <a class="productItem_to_cart"><i class="fa fa-shopping-cart"></i> Thêm vào giỏ hàng</a>
+                                            <th:block th:if="${product.quantity} > 0">
+		                                    	<a class="productItem_to_cart"><i class="fa fa-shopping-cart"></i> Thêm vào giỏ hàng</a>
+		                                    </th:block>
+		                                    <th:block th:if="${product.quantity} < 1">
+		                                    	<p class="out_off_product" style="color: #ffffff;">Hết hàng</p>
+		                                    </th:block>
                                         </div>
                                     </div>
                                 </div>
@@ -435,7 +461,12 @@
 	                                    <span th:if="${product.promotionFlag} == 1" th:text="${product.promotionPrice}" class="productItem_promotionPrice"></span>
 	                                    <span th:text="${product.price}" class="productItem_price"></span>
                                         <div class="featured__item__pic__hover" style="bottom: 0px">
-                                            <a class="productItem_to_cart"><i class="fa fa-shopping-cart"></i> Thêm vào giỏ hàng</a>
+                                            <th:block th:if="${product.quantity} > 0">
+		                                    	<a class="productItem_to_cart"><i class="fa fa-shopping-cart"></i> Thêm vào giỏ hàng</a>
+		                                    </th:block>
+		                                    <th:block th:if="${product.quantity} < 1">
+		                                    	<p class="out_off_product" style="color: #ffffff;">Hết hàng</p>
+		                                    </th:block>
                                         </div>
                                     </div>
                                 </div>
@@ -463,7 +494,12 @@
 	                                    <span th:if="${product.promotionFlag} == 1" th:text="${product.promotionPrice}" class="productItem_promotionPrice"></span>
 	                                    <span th:text="${product.price}" class="productItem_price"></span>
                                         <div class="featured__item__pic__hover" style="bottom: 0px">
-                                            <a class="productItem_to_cart"><i class="fa fa-shopping-cart"></i> Thêm vào giỏ hàng</a>
+                                            <th:block th:if="${product.quantity} > 0">
+		                                    	<a class="productItem_to_cart"><i class="fa fa-shopping-cart"></i> Thêm vào giỏ hàng</a>
+		                                    </th:block>
+		                                    <th:block th:if="${product.quantity} < 1">
+		                                    	<p class="out_off_product" style="color: #ffffff;">Hết hàng</p>
+		                                    </th:block>
                                         </div>
                                     </div>
                                 </div>
@@ -484,7 +520,12 @@
 	                                    <span th:if="${product.promotionFlag} == 1" th:text="${product.promotionPrice}" class="productItem_promotionPrice"></span>
 	                                    <span th:text="${product.price}" class="productItem_price"></span>
                                         <div class="featured__item__pic__hover" style="bottom: 0px">
-                                            <a class="productItem_to_cart"><i class="fa fa-shopping-cart"></i> Thêm vào giỏ hàng</a>
+                                            <th:block th:if="${product.quantity} > 0">
+		                                    	<a class="productItem_to_cart"><i class="fa fa-shopping-cart"></i> Thêm vào giỏ hàng</a>
+		                                    </th:block>
+		                                    <th:block th:if="${product.quantity} < 1">
+		                                    	<p class="out_off_product" style="color: #ffffff;">Hết hàng</p>
+		                                    </th:block>
                                         </div>
                                     </div>
                                 </div>

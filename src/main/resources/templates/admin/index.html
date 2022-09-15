@@ -25,6 +25,10 @@
 	      	color: #007bff;
 	      	font-size: 16px;
 	    }
+	    .info-confirm {
+			color: red;
+    		font-weight: 700;
+		}
     </style>
     
 </head>
@@ -41,6 +45,16 @@
 	        </div>
         </div>
         <div class="row">
+        	<div class="col-sm-6 col-12">
+                <div class="card" style="margin-bottom: 50px;">
+                  <div class="card-body">
+                    <h5 class="card-title">Quản lý đơn hàng</h5>
+                    <p class="card-text">Kiểm tra, xác nhận các đơn hàng, thông tin của khách.</p>
+                    <p th:if="${orderFlag}" class="info-confirm">Có đơn hàng cần xác nhận.</p>
+                    <a th:href="@{/admin/orderList}" class="btn btn-primary">Quản lý đơn hàng</a>
+                  </div>
+                </div>
+            </div>
             <div class="col-sm-6 col-12">
                 <div class="card" style="margin-bottom: 50px;">
                   <div class="card-body">
@@ -56,6 +70,7 @@
                   <div class="card-body">
                     <h5 class="card-title">Quản lý sản phẩm</h5>
                     <p class="card-text">Thêm mới, sửa xoá, sắp xếp các sản phẩm</p>
+                    <p th:if="${productFlag}" class="info-confirm">Có sản phẩm gần hết trong kho.</p>
                     <a th:href="@{/admin/productList}" class="btn btn-primary">Quản lý danh sách</a>
                     <a th:href="@{/admin/product}" class="btn btn-primary">Tạo mới</a>
                   </div>
@@ -68,6 +83,15 @@
                     <p class="card-text">Bài viết trong mục chia sẻ, mẹo vặt</p>
                     <a th:href="@{/admin/blogList}" class="btn btn-primary">Quản lý danh sách</a>
                     <a th:href="@{/admin/blog}" class="btn btn-primary">Tạo mới</a>
+                  </div>
+                </div>
+            </div>
+            <div class="col-sm-6 col-12">
+                <div class="card" style="margin-bottom: 50px;">
+                  <div class="card-body">
+                    <h5 class="card-title">Quản lý hình ảnh, banner</h5>
+                    <p class="card-text">Thay đổi hình ảnh, banner</p>
+                    <a th:href="@{/admin/imagesBanner}" class="btn btn-primary">Quản lý danh sách</a>
                   </div>
                 </div>
             </div>

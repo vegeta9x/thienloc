@@ -1,12 +1,7 @@
 package com.thienloc.controller;
 
-import java.io.BufferedOutputStream;
-import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.net.URL;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -18,26 +13,28 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.util.ResourceUtils;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.multipart.MultipartFile;
 
 import com.thienloc.bean.BlogBean;
 import com.thienloc.bean.CategoryBean;
+import com.thienloc.bean.ImagesBannerBean;
 import com.thienloc.bean.OrderBean;
 import com.thienloc.bean.ProductBean;
 import com.thienloc.enums.Flag;
+import com.thienloc.enums.OrderStatus;
 import com.thienloc.form.BlogForm;
 import com.thienloc.form.ImageProductForm;
-import com.thienloc.form.ImageProductSelectForm;
+import com.thienloc.form.ImagesBannerForm;
+import com.thienloc.form.ProductForm;
 import com.thienloc.model.Blog;
 import com.thienloc.model.Category;
 import com.thienloc.model.ImageProduct;
+import com.thienloc.model.Orders;
 import com.thienloc.model.Product;
 import com.thienloc.utils.Validator;
 
@@ -59,9 +56,12 @@ public class AdminController {
 	@Autowired
 	BlogBean blogBean;
 	
+	@Autowired
+	ImagesBannerBean imagesBannerBean;
+	
 	private static final List<String> QUERYSTRING = Stream.of("order_by", "sort_by").collect(Collectors.toList());
 	private static final List<String> SORTBYLIST = Stream.of("asc", "desc").collect(Collectors.toList());
-	private static final List<String> ORDERBYLIST = Stream.of("price", "date").collect(Collectors.toList());
+	private static final List<String> ORDERBYLIST = Stream.of("price", "date", "quantity").collect(Collectors.toList());
 	
 	@RequestMapping("/admin/404")
 	public String notFound() {
@@ -74,7 +74,10 @@ public class AdminController {
 	}
 	
 	@RequestMapping("/admin/thienloc")
-	public String adminPage() {
+	public String adminPage(Model model) {
+		model.addAttribute("productFlag", productBean.checkQuantity(5));
+		model.addAttribute("orderFlag", orderBean.countOrderByStatus(OrderStatus.CONFIRM.getCode()) > 0 ? true : false);
+		
 		return "admin/index";
 	}
 	
@@ -202,8 +205,8 @@ public class AdminController {
 				return "redirect:/admin/404";
 			
 		} else {
-			orderBy = null;
-			sortBy = null;
+			orderBy = "productId";
+			sortBy = "asc";
 		}
 		
 		model.addAttribute("productList", productBean.findAllProduct(Flag.OFF.getCode() ,orderBy, sortBy, Flag.OFF.getCode(), null, null));
@@ -235,8 +238,8 @@ public class AdminController {
 					!Validator.checkEmpty(SORTBYLIST, sortBy))
 				return "redirect:/admin/404";
 		} else {
-			orderBy = null;
-			sortBy = null;
+			orderBy = "productId";
+			sortBy = "asc";
 		}
 		
 		String categoryId = categoryCodePath.substring(categoryCodePath.lastIndexOf("-") + 1);
@@ -246,7 +249,8 @@ public class AdminController {
 		if(category == null || !category.getCategoryCode().equals(categoryCode))
 			return "redirect:/admin/404";
 		
-		model.addAttribute("productList", productBean.findProductByCategory(category, orderBy, sortBy, Flag.OFF.getCode(), Flag.OFF.getCode()));
+		List<ProductForm> productForms = productBean.findProductByCategory(category, orderBy, sortBy, Flag.OFF.getCode(), Flag.OFF.getCode());
+		model.addAttribute("productList", productForms == null ? null : productForms);
 		model.addAttribute("categoryList", categoryBean.findAllCategory());
 		
 		return "admin/productList";
@@ -327,6 +331,61 @@ public class AdminController {
 		productBean.deleteProduct(product);
 		
 		return "redirect:/admin/productList";
+	}
+	
+	//-------------------//
+	
+	@RequestMapping(value = "/admin/orderList", method = RequestMethod.GET)
+	public String orderList(Model model) {
+		model.addAttribute("orderList", orderBean.findAll());
+		
+		model.addAttribute("confirm", orderBean.countOrderByStatus(OrderStatus.CONFIRM.getCode()));
+		model.addAttribute("confirmed", orderBean.countOrderByStatus(OrderStatus.CONFIRMED.getCode()));
+		model.addAttribute("transport", orderBean.countOrderByStatus(OrderStatus.TRANSPORT.getCode()));
+		model.addAttribute("success", orderBean.countOrderByStatus(OrderStatus.SUCCESS.getCode()));
+		model.addAttribute("cancel", orderBean.countOrderByStatus(OrderStatus.CANCEL.getCode()));
+		
+		model.addAttribute("revenue", orderBean.countRevenue());
+		
+		return "admin/orderList";
+	}
+	
+	@RequestMapping(value = "/admin/orderDetail", method = RequestMethod.GET)
+	public String orderDetail(Model model,
+					@RequestParam(value = "orderId", required = true, defaultValue = "") String orderId) {
+		Orders orders = orderBean.findOrdersByOrderId(orderId);
+		if(orders == null) {
+			return "redirect:/admin/404";
+		}
+		
+		model.addAttribute("orders", orders);
+		model.addAttribute("orderDetailsForms", orderBean.findOrderDetailsFormByOrderId(orderId));
+		
+		return "admin/orderDetail";
+	}
+	
+	@RequestMapping(value = "/admin/orderDetail", method = RequestMethod.POST)
+	public String orderDetail(Model model, @ModelAttribute("orders") Orders orders) throws IOException {
+		orderBean.updateStatus(orders);
+		
+		return "redirect:/admin/orderDetail?orderId=" + orders.getOrderId();
+	}
+	
+	//-------------------//
+	
+	@RequestMapping(value = "/admin/imagesBanner", method = RequestMethod.GET)
+	public String imagesBanner(Model model) {
+		model.addAttribute("ImagesBannerList", imagesBannerBean.findAllImagesBanner());
+		model.addAttribute("ImagesBannerForm", new ImagesBannerForm());
+		
+		return "admin/imagesBanner";
+	}
+	
+	@RequestMapping(value = "/admin/imagesBanner", method = RequestMethod.POST)
+	public String imagesBanner(Model model, @ModelAttribute("ImagesBannerForm") ImagesBannerForm imagesBannerForm) throws IOException {
+		imagesBannerBean.saveData(imagesBannerForm);
+		
+		return "redirect:/admin/imagesBanner";
 	}
 	
 }

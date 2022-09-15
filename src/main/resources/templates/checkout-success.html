@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="Thiên Lộc pharmacy">
+    <meta name="keywords" content="thien loc, thiên lộc, Thiên Lộc pharmacy">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta http-equiv='refresh' content='10; URL=/'>
+    <title>Đặt hàng thành công</title>
+
+    <!-- Google Font -->
+    <!-- <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;600;900&display=swap" rel="stylesheet"> -->
+
+    <!-- Css Styles -->
+    <link rel="stylesheet" href="../../css/bootstrap.min.css" type="text/css">
+    <link rel="stylesheet" href="../../css/style.css" type="text/css">
+</head>
+
+<body>
+
+    <!-- Checkout Section Begin -->
+    <section class="checkout spad">
+        <div class="container text-center">
+        	<div class="logo">
+        		<a href="/"><img src="../../images/thienloc-pharmacy.png" alt="thiên lộc pharmacy"></a>
+        	</div>
+        	<div class="content">
+        		<p style="padding: 15px 0px; font-size: 26px;">Đặt hàng thành công.</p>
+        		<p>Cảm ơn bạn đã đặt hàng. Đơn hàng của bạn sẽ được chúng tôi xử lý.</p>
+        		<p>Tự động chuyển đến trang mua sắm sau <span id="time">10</span> giây</p>
+        		<a style="margin-top: 20px;" href="/" class="primary-btn cart-btn">Tiếp tục mua sắm</a>
+        	</div>
+        </div>
+    </section>
+    <!-- Checkout Section End -->
+
+
+    <!-- Js Plugins -->
+    <script src="../../js/jquery-3.3.1.min.js"></script>
+    <script src="../../js/bootstrap.min.js"></script>
+    <script src="../../js/main.js"></script>
+    <script>
+    	function startTimer(duration, display) {
+	    var timer = duration, seconds;
+	    setInterval(function () {
+	        seconds = parseInt(timer % 60, 10);
+	        display.textContent = seconds;
+	        if (--timer < 0) {
+	            timer = duration;
+	        }
+	    }, 1000);
+	}
+	window.onload = function () {
+		localStorage.clear();
+		
+	    var timeout = 10,
+	        display = document.querySelector('#time');
+	    startTimer(timeout, display);
+	};
+    </script>
+	
+</body>
+
+</html>

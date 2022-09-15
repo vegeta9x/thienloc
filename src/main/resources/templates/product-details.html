@@ -51,12 +51,12 @@
                     <div class="product__details__pic">
                     	<span style="display: none;" class="imageProductListSize" th:text="${#lists.size(imageProductList)}"></span>
                         <div class="product__details__pic__item">
-                            <img class="product__details__pic__item--large" th:src="@{|../images/category/${product.imageName}|}" alt="">
+                            <img class="product__details__pic__item--large" th:src="@{|../images/category/${product.imageName}|}" th:alt="${product.productName}" style="height: 576px; width: 555px;">
                         </div>
 						<div class="product__details__pic__slider owl-carousel">
-							<img th:attr="data-imgbigurl=@{|../images/category/${product.imageName}|}" th:src="@{|../images/category/${product.imageName}|}" alt="">
+							<img th:attr="data-imgbigurl=@{|../images/category/${product.imageName}|}" th:src="@{|../images/category/${product.imageName}|}" th:alt="${product.productName}" style="height: 120px; width: 120px;">
 							<th:block th:each="imageProduct : ${imageProductList}">
-	                            <img th:attr="data-imgbigurl=@{|../images/category/${imageProduct.Name}|}" th:src="@{|../images/category/${imageProduct.Name}|}" alt="">
+	                            <img th:attr="data-imgbigurl=@{|../images/category/${imageProduct.Name}|}" th:src="@{|../images/category/${imageProduct.Name}|}" th:alt="${product.productName}" style="height: 120px; width: 120px;" >
 							</th:block>
 						</div>
                     </div>
@@ -69,7 +69,6 @@
                         <h3 th:text="${product.productName}" class="product__details__name"></h3>
                         <span th:text="${product.promotionPrice}" class="product__details__promotionPrice"></span>
                         <span th:text="${product.price}" class="product__details__price"></span>
-                        <p class="product__details__brand">Thương hiệu: <a th:href="@{|/brand/${product.brand}|}" th:text="${product.brand}"></a></p>
                         <p th:text="${product.description}" class="description_hide" style="display: none;"></p>
                         <p class="description"></p>
                         <div class="product__details__quantity">
@@ -79,18 +78,25 @@
                                 </div>
                             </div>
                         </div>
-                        <a class="primary-btn">Thêm vào giỏ hàng</a>
+                        <th:block th:if="${product.quantity} > 0">
+                        	<a class="primary-btn">Thêm vào giỏ hàng</a>
+                        </th:block>
+                        <th:block th:if="${product.quantity} < 1">
+                        	<p class="out_off_product" style="color: #ffffff;">Hết hàng</p>
+                        </th:block>
                         <div id="snackbar" class=""><span><i class="fa fa-check"></i> Thêm sản phẩm thành công</span></div>
+                        <div class="info_product">
+                        	<p class="product__details__brand">Thương hiệu: <a th:href="@{|/brand/${product.brand}|}" th:text="${product.brand}"></a></p>
+                        	<p th:text="${product.info}" class="info_hide" style="display: none;"></p>
+                			<p class="info"></p>
+                        </div>
                     </div>
                 </div>
                 <div class="col-lg-12">
                     <div class="product__details__tab">
                         <ul class="nav nav-tabs" role="tablist" style="justify-content: center; border-top: 1px solid #ebebeb; padding-top: 40px; margin-top: 50px;">
                             <li class="nav-item">
-                                <a class="nav-link active" data-toggle="tab" href="#detail" role="tab" aria-selected="true">Mô tả</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" data-toggle="tab" href="#info" role="tab" aria-selected="false">Thông tin sản phẩm</a>
+                                <a class="nav-link active" data-toggle="tab" href="#detail" role="tab" aria-selected="true">Mô tả sản phẩm</a>
                             </li>
                         </ul>
                         <div class="tab-content">
@@ -98,12 +104,6 @@
                                 <div class="product__details__tab__desc">
                                 	<p th:text="${product.detail}" class="detail_hide" style="display: none;"></p>
                         			<p class="detail"></p>
-                                </div>
-                            </div>
-                            <div class="tab-pane" id="info" role="tabpanel">
-                                <div class="product__details__tab__desc">
-									<p th:text="${product.info}" class="info_hide" style="display: none;"></p>
-                        			<p class="info"></p>                                    
                                 </div>
                             </div>
                         </div>
@@ -137,7 +137,12 @@
                             <span th:if="${relatedProduct.promotionFlag} == 1" th:text="${relatedProduct.promotionPrice}" class="productItem_promotionPrice"></span>
                             <span th:text="${relatedProduct.price}" class="productItem_price"></span>
                             <div class="featured__item__pic__hover" style="bottom: 0px">
-                                <a class="productItem_to_cart"><i class="fa fa-shopping-cart"></i> Thêm vào giỏ hàng</a>
+	                            <th:block th:if="${product.quantity} > 0">
+                                	<a class="productItem_to_cart"><i class="fa fa-shopping-cart"></i> Thêm vào giỏ hàng</a>
+                                </th:block>
+                                <th:block th:if="${product.quantity} < 1">
+                                	<p class="out_off_product" style="color: #ffffff;">Hết hàng</p>
+                                </th:block>
                             </div>
                         </div>
                     </div>

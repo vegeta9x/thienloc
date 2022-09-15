@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+	    <meta charset="UTF-8">
+	    <meta name="description" content="Thiên Lộc pharmacy">
+	    <meta name="keywords" content="thien loc, thiên lộc, Thiên Lộc pharmacy">
+	    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+	    <title>Quản lý danh sách đơn hàng</title>
+	
+	    <!-- Google Font -->
+	    <!-- <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;600;900&display=swap" rel="stylesheet"> -->
+	
+	    <!-- Css Styles -->
+	    <link rel="stylesheet" href="../css/bootstrap.min.css" type="text/css">
+	    <link rel="stylesheet" href="../css/font-awesome.min.css" type="text/css">
+	    <link rel="stylesheet" href="../css/jquery-ui.min.css" type="text/css">
+	    <link rel="stylesheet" href="../css/style.css" type="text/css">
+	    
+	    <style>
+			.header__top a {
+		      	color: #007bff;
+		      	font-size: 16px;
+		    }
+		    .blog__pagination {
+				padding-top: 15px;
+			}
+			.blog__pagination:before {
+				top: -15px;
+			}
+			.admin_page_navigation a.active_page {
+				background: #007bff;
+				border-color: #007bff;
+				color: #ffffff;
+			}
+			
+			.admin_page_navigation a:hover {
+				background: #007bff;
+				border-color: #007bff;
+				color: #ffffff;
+			}
+	    </style>
+	</head>
+	
+	<body>
+	    <div class="container admin__page">
+        	<th:block th:include="/admin/_header"></th:block>
+	        <div class="row">
+		        <div class="col-12">
+		            <div class="section-title__admin">
+		                <h4>Danh sách đơn hàng</h4>
+		            </div>
+		        </div>
+	        </div>
+	    	<div class="row">
+	    		<div class="col-lg-9">
+	    			<div class="info__admin__orderList" style="margin-bottom: 20px;">
+		    			<div class="filter__found" style="text-align: left; display: inline-block;">
+	                        <span><span th:text="${orderList.size()}"></span> đơn hàng</span>
+							<div style="margin-top: 15px;">
+								<span style="color: Red;">Cần xác nhận:</span> <span th:text="${confirm}"></span> &nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp; 
+								<span style="color: #5cb85c;">Đã xác nhận:</span> <span th:text="${confirmed}"></span> &nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp; 
+								<span style="color: #5bc0de;">Đang giao hàng:</span> <span th:text="${transport}"></span> &nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp; 
+								<span style="color: #337ab7;">Thành công:</span> <span th:text="${success}"></span> &nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp; 
+								<span>Đã huỷ:</span> <span th:text="${cancel}"></span>
+							</div>
+	                    </div>
+	    			</div>
+	    		</div>
+	    		<div class="col-lg-3">
+	    			<span style="float: right; margin-top: 10px;">Doanh thu: <span th:text="${revenue}" class="revenue"></span></span>
+	    		</div>
+	    	</div>
+	    	<div class="row">
+	    		<div class="col-lg-12">
+	    			<table class="table table-hover">
+					  <thead>
+					    <tr>
+					      <th scope="col" style="width: 5%;">#</th>
+					      <th scope="col" style="width: 15%;">Ngày tạo đơn</th>
+					      <th scope="col" style="width: 15%;">Tên khách hàng</th>
+					      <th scope="col" style="width: 15%;">Số điện thoại</th>
+					      <th scope="col" style="width: 12%;">Số sản phẩm</th>
+					      <th scope="col" style="width: 13%;">Tổng tiền</th>
+					      <th scope="col" style="width: 15%;">Trạng thái</th>
+					      <th scope="col" style="width: 10%;">Tác vụ</th>
+					    </tr>
+					  </thead>
+					  <input type='hidden' id='current_page' value="0" />
+				      <input type='hidden' id='show_per_page' value="15" />
+					  <tbody id="content">
+					    <tr th:each="order,iterStat : ${orderList}">
+					      <th th:text="${iterStat.count}" scope="row"></th>
+					      <td class="orderDate"><p th:text="${#calendars.format(order.orderDate, 'dd-MM-yyyy HH:mm')}"></p></td>
+					      <td th:text="${order.customerName}" class="customerName"></td>
+					      <td class="customerPhone">
+					      	<a th:href="@{|tel:${order.customerPhone}|}" th:text="${order.customerPhone}"></a>
+					      </td>
+					      <td th:text="${order.totalProduct}" class="totalProduct"></td>
+					      <td th:text="${order.totalPrice}" class="totalPrice"></td>
+					      <td th:text="${order.status}" class="status"></td>
+					      <td>
+					      	<a th:href="@{|/admin/orderDetail?orderId=${order.orderId}|}" class="detail"><i class="fa fa-eye"></i> chi tiết</a>
+					      </td>
+					    </tr>
+					    <tr th:if="${#lists.isEmpty(orderList)}"><td colspan="8">Không có dữ liệu</td></tr>
+					  </tbody>
+					</table>
+	    		</div>
+	    	</div>
+	    	<div class="row">
+                <div class="col-lg-12">
+                    <div id="page_navigation" class="admin_page_navigation"></div>
+                </div>
+            </div>
+	    </div>
+		
+		<!-- Js Plugins -->
+		<script src="../js/jquery-3.3.1.min.js"></script>
+		<script src="../js/bootstrap.min.js"></script>
+		<script src="../js/jquery-ui.min.js"></script>
+		<script src="../js/page_navigation.js"></script>
+    	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
+    	
+		<script>
+			$(document).ready(function() {
+				var revenue = $('.revenue').html();
+				$('.revenue').html(parseInt(revenue).toLocaleString("vi", {style:"currency", currency:"VND"}));
+				
+				$( ".status" ).each(function(index) {
+					if($(this).text() == 0)
+						$(".status").eq(index).html("Cần xác nhận").css("color", "red").css("font-weight", "700");
+					else if($(this).text() == 1)
+						$(".status").eq(index).html("Đã xác nhận");
+					else if($(this).text() == 2)
+						$(".status").eq(index).html("Đang giao hàng");
+					else if($(this).text() == 3)
+						$(".status").eq(index).html("Thành công");
+					else if($(this).text() == 4)
+						$(".status").eq(index).html("Đã huỷ");
+				});
+				
+				$('.totalPrice').each(function () {
+					var price = $(this).html();
+					$(this).html(parseInt(price).toLocaleString("vi", {style:"currency", currency:"VND"}));
+			    });
+			});
+		    
+		</script>
+	</body>
+</html>

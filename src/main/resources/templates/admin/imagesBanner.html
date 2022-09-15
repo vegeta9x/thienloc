@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+	    <meta charset="UTF-8">
+	    <meta name="description" content="Thiên Lộc pharmacy">
+	    <meta name="keywords" content="thien loc, thiên lộc, Thiên Lộc pharmacy">
+	    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+	    <title>Quản lý hình ảnh, banner</title>
+	
+	    <!-- Google Font -->
+	    <!-- <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;600;900&display=swap" rel="stylesheet"> -->
+	
+	    <!-- Css Styles -->
+	    <link rel="stylesheet" href="../css/bootstrap.min.css" type="text/css">
+	    <link rel="stylesheet" href="../css/font-awesome.min.css" type="text/css">
+	    <link rel="stylesheet" href="../css/jquery-ui.min.css" type="text/css">
+	    <link rel="stylesheet" href="../css/style.css" type="text/css">
+	    
+	    <style>
+			.header__top a {
+		      	color: #007bff;
+		      	font-size: 16px;
+		    }
+	    </style>
+	</head>
+	
+	<body>
+	    <div class="container admin__page">
+        	<th:block th:include="/admin/_header"></th:block>
+	        <div class="row">
+		        <div class="col-12">
+		            <div class="section-title__admin">
+		                <p>Lưu ý: kích thước file không vượt quá 3Mb.</p>
+		                <p>Lưu ý: kích thước file càng nặng thì trang web load càng lâu.</p>
+		            </div>
+		        </div>
+	        </div>
+	    	<div class="row">
+	    		<div class="col-lg-12">
+	    		<form th:object="${ImagesBannerForm}" method="POST" th:action="@{/admin/imagesBanner}" enctype="multipart/form-data">
+	    			<table class="table">
+						  <thead>
+						    <tr>
+						      <th scope="col" style="width: 45%;">Hình ảnh</th>
+						      <th scope="col" style="width: 15%;">Thể loại</th>
+						      <th scope="col" style="width: 15%;">Kích thước<br>Dài x cao</th>
+						      <th scope="col" style="width: 25%;">Thay thế</th>
+						    </tr>
+						  </thead>
+						  <tbody>
+						  	<th:block th:each="ImagesBanner,iterStat : ${ImagesBannerList}">
+						  		<tr th:if="${ImagesBanner.imageType} == 1">
+							  		<td><img th:src="@{|../images/banner/${ImagesBanner.imageName}|}" ></td>
+							  		<td><p>Ảnh banner to</p></td>
+							  		<td><p th:text="${ImagesBanner.size}"></p><p><th:block th:text="${ImagesBanner.width}" /> x <th:block th:text="${ImagesBanner.height}" /></p></td>
+							  		<td><input th:field="${ImagesBannerForm.bannerFile}" type="file" class="form-control" ></td>
+							  	</tr>
+							  	<tr th:if="${ImagesBanner.imageType} == 2">
+							  		<td><img th:src="@{|../images/banner/${ImagesBanner.imageName}|}" ></td>
+							  		<td><p>Ảnh banner 1</p><p>banner 1 và banner 2 chiều dài x cao phải bằng nhau</p></td>
+							  		<td><p th:text="${ImagesBanner.size}"></p><p><th:block th:text="${ImagesBanner.width}" /> x <th:block th:text="${ImagesBanner.height}" /></p></td>
+							  		<td><input th:field="${ImagesBannerForm.bannerSub1File}" type="file" class="form-control" ></td>
+							  	</tr>
+							  	<tr th:if="${ImagesBanner.imageType} == 3">
+							  		<td><img th:src="@{|../images/banner/${ImagesBanner.imageName}|}" ></td>
+							  		<td><p>Ảnh banner 2</p><p>banner 1 và banner 2 chiều dài x cao phải bằng nhau</p></td>
+							  		<td><p th:text="${ImagesBanner.size}"></p><p><th:block th:text="${ImagesBanner.width}" /> x <th:block th:text="${ImagesBanner.height}" /></p></td>
+							  		<td><input th:field="${ImagesBannerForm.bannerSub2File}" type="file" class="form-control" ></td>
+							  	</tr>
+							  	<tr th:if="${ImagesBanner.imageType} == 5">
+							  		<td><img th:src="@{|../images/avatar/${ImagesBanner.imageName}|}" ></td>
+							  		<td><p>Ảnh avatar</p></td>
+							  		<td><p th:text="${ImagesBanner.size}"></p><p><th:block th:text="${ImagesBanner.width}" /> x <th:block th:text="${ImagesBanner.height}" /></p></td>
+							  		<td><input th:field="${ImagesBannerForm.avatarFile}" type="file" class="form-control" ></td>
+							  	</tr>
+						  	</th:block>
+						  </tbody>
+                    </table>
+                    <div class="admin__button_area">
+                        <button class="btn btn-primary add-blog-btn" value="Upload" type="submit" style="margin: 50px 0px; float: right;">Upload</button>
+                    </div>
+	    		</form>
+	    		</div>
+	    	</div>
+	    </div>
+		
+		<!-- Js Plugins -->
+		<script src="../js/jquery-3.3.1.min.js"></script>
+		<script src="../js/bootstrap.min.js"></script>
+		<script src="../js/jquery-ui.min.js"></script>
+    	
+		<script>
+			$(document).ready(function() {
+			    $('.delete').click(function() {
+			       if(confirm("Bạn có chắc chắn muốn xoá ?"))
+			        {
+			            return true;
+			        }        
+			        return false;
+			    });
+			});
+		    
+		</script>
+	</body>
+</html>

@@ -600,6 +600,12 @@
 	<if test="orderBy == 'date'">
 	  order by updated_date
 	</if>
+	<if test="orderBy == 'quantity'">
+	  order by quantity
+	</if>
+	<if test="orderBy == 'productId'">
+	  order by product_id
+	</if>
 	<if test="orderBy == null or orderBy == ''">
 	  order by updated_date
 	</if>
@@ -651,6 +657,12 @@
 	</if>
 	<if test="orderBy == 'date'">
 	  order by updated_date
+	</if>
+	<if test="orderBy == 'quantity'">
+	  order by quantity
+	</if>
+	<if test="orderBy == 'productId'">
+	  order by product_id
 	</if>
 	<if test="orderBy == null or orderBy == ''">
 	  order by updated_date

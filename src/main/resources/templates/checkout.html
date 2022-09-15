@@ -13,68 +13,57 @@
 
     <!-- Css Styles -->
     <link rel="stylesheet" href="css/bootstrap.min.css" type="text/css">
-    <link rel="stylesheet" href="css/font-awesome.min.css" type="text/css">
-    <link rel="stylesheet" href="css/elegant-icons.css" type="text/css">
-    <link rel="stylesheet" href="css/slicknav.min.css" type="text/css">
     <link rel="stylesheet" href="css/style.css" type="text/css">
 </head>
 
 <body>
-    <th:block th:include="/_header"></th:block>
-
-    <!-- Breadcrumb Section Begin -->
-    <section class="breadcrumb-section set-bg" data-setbg="../images/banner/breadcrumb.jpg">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12 text-center">
-                    <div class="breadcrumb__text">
-                        <h3>Thanh toán</h3>
-                        <div class="breadcrumb__option">
-                            <a href="/">Trang chủ</a> &nbsp;ー&nbsp;
-                            <span>Thanh toán</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    <!-- Breadcrumb Section End -->
 
     <!-- Checkout Section Begin -->
     <section class="checkout spad">
         <div class="container">
+        	<div class="logo">
+        		<a href="/"><img src="images/logo/thienloc-pharmacy.png" alt="thiên lộc pharmacy"></a>
+        	</div>
             <div class="checkout__form">
-                
-                <form action="#">
+                <form th:object="${checkoutForm}" method="POST" th:action="@{/checkout}">
                     <div class="row">
                         <div class="col-lg-7 col-md-6">
                             <h4>Thông tin người nhận</h4>
+                            <input hidden th:field="*{totalPrice}" class="totalPrice" type="text">
+                            <input hidden th:field="*{totalProduct}" class="totalProduct" type="text">
+                            <input hidden th:field="*{methodPay}" class="methodPay" type="text">
                             <div class="checkout__input">
                                 <p>Họ và Tên<span>*</span></p>
-                                <input type="text">
+                                <span class="error-custommerName" style="display: none;">Chưa nhập họ tên</span>
+	                            <input th:field="*{custommerName}" class="custommerName" type="text">
                             </div>
                             <div class="checkout__input">
                                 <p>Địa chỉ<span>*</span></p>
-                                <input type="text" placeholder="Số nhà, tên đường" class="checkout__input__add">
-                                <input type="text" placeholder="Phường/Xã, Quận/Huyện, Tỉnh/Thành phố">
+                                <span class="error-customerAddress_1" style="display: none;">Chưa nhập số nhà, tên đường</span>
+                                <input th:field="*{customerAddress_1}" class="customerAddress_1 checkout__input__add" type="text" placeholder="Số nhà, tên đường">
+                                <span class="error-customerAddress_2" style="display: none;">Chưa nhập địa chỉ</span>
+                                <input th:field="*{customerAddress_2}" class="customerAddress_2" type="text" placeholder="Phường/Xã, Quận/Huyện, Tỉnh/Thành phố">
                             </div>
                             <div class="row">
                                 <div class="col-lg-6">
                                     <div class="checkout__input">
                                         <p>Số điện thoại<span>*</span></p>
-                                        <input type="text">
+                                        <span class="error-customerPhone_1" style="display: none;">Chưa nhập số điện thoại</span>
+                                        <span class="error-customerPhone_2" style="display: none;">Số điện thoại không đúng định dạng.</span>
+                                        <input th:field="*{customerPhone}" maxlength="10" class="customerPhone" type="text">
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="checkout__input">
-                                        <p>Email<span>*</span></p>
-                                        <input type="text">
+                                        <p>Email</p>
+                                        <span class="error-customerEmail" style="display: none;">Địa chỉ email của bạn không hợp lệ.</span>
+                                        <input th:field="*{customerEmail}" class="customerEmail" type="text">
                                     </div>
                                 </div>
                             </div>
                             <div class="checkout__input">
-                                <p>Ghi chú<span></span></p>
-                                <input type="text" placeholder="Vui lòng cho biết lời nhắn.">
+                                <p>Ghi chú</p>
+                                <input th:field="*{note}" class="note" type="text" placeholder="Vui lòng cho biết lời nhắn.">
                             </div>
                             <br>
                             <h4>Phương thức thanh toán</h4>
@@ -99,7 +88,7 @@
                                   </div>
                             </div>
                         </div>
-
+						
                         <div class="col-lg-5 col-md-6">
                             <div class="checkout__order">
                                 <h4>Đơn hàng</h4>
@@ -108,12 +97,22 @@
                                 </ul>
                                 <ul class="checkout__order__subtotal">
                                     <li>Tạm tính <span class="text"></span></li>
+                                    <li>Giảm giá <span>- 0 ₫</span></li>
                                     <li>Phí vận chuyển <span>Tạm tính</span></li>
                                 </ul>
                                 <div class="checkout__order__total">Tổng cộng <span class="text"></span></div>
                                 <button type="submit" class="site-btn">Đặt hàng</button>
                             </div>
                         </div>
+                        <table style="display: none;" class="orderDetails">
+				        	<tbody>
+					            <tr th:each="orderDetail, iterStat : ${orderDetails}">
+					               <td><input type='hidden' name='productId' th:value='${orderDetail.productId}'></td>
+					               <td><input type='hidden' name='quantity' th:value='${orderDetail.quantity}'></td>
+					               <td><input type='hidden' name='price' th:value='${orderDetail.price}'></td>
+					            </tr>
+				         	</tbody>
+				      	</table>
                     </div>
                 </form>
             </div>
@@ -121,16 +120,12 @@
     </section>
     <!-- Checkout Section End -->
 
-    <th:block th:include="/_footer"></th:block>
 
     <!-- Js Plugins -->
     <script src="js/jquery-3.3.1.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
-    <script src="js/jquery.slicknav.js"></script>
-    <script src="js/owl.carousel.min.js"></script>
-    <script src="js/main.js"></script>
     <script src="js/checkout.js"></script>
-
+	
 </body>
 
 </html>

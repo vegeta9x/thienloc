@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+	    <meta charset="UTF-8">
+	    <meta name="description" content="Thiên Lộc pharmacy">
+	    <meta name="keywords" content="thien loc, thiên lộc, Thiên Lộc pharmacy">
+	    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+	    <title>Chi tiết đơn hàng #<th:block th:text="${orders.orderId}" /></title>
+	
+	    <!-- Google Font -->
+	    <!-- <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;600;900&display=swap" rel="stylesheet"> -->
+	
+	    <!-- Css Styles -->
+	    <link rel="stylesheet" href="../css/bootstrap.min.css" type="text/css">
+	    <link rel="stylesheet" href="../css/font-awesome.min.css" type="text/css">
+	    <link rel="stylesheet" href="../css/jquery-ui.min.css" type="text/css">
+	    <link rel="stylesheet" href="../css/style.css" type="text/css">
+	    
+	    <style>
+			.header__top a {
+		      	color: #007bff;
+		      	font-size: 16px;
+		    }
+	    </style>
+	</head>
+	
+	<body>
+	    <div class="container admin__page">
+        	<th:block th:include="/admin/_header"></th:block>
+	        <div class="row">
+		        <div class="col-12">
+		            <div class="section-title__admin">
+		                <h4>Chi tiết đơn hàng #<th:block th:text="${orders.orderId}" /></h4>
+		            </div>
+		        </div>
+	        </div>
+	    	<div class="row">
+	    		<div class="col-lg-12">
+	    			<form th:object="${orders}" method="POST" th:action="@{/admin/orderDetail}">
+	    				<input th:field="${orders.orderId}" hidden class="orderId" />
+		    			<table class="table table-bordered">
+						  <tbody>
+						  	<tr>
+						  		<th scope="col" style="width: 20%;">Ngày tạo</th>
+						  		<td th:text="${#calendars.format(orders.orderDate, 'dd-MM-yyyy HH:mm')}" class="orderDate"></td>
+						  	</tr>
+						  	<tr>
+						  		<th scope="col" style="width: 20%;">Tên khách hàng</th>
+						  		<td th:text="${orders.customerName}" class="customerName"></td>
+						  	</tr>
+						  	<tr>
+						  		<th scope="col" style="width: 20%;">Địa chỉ</th>
+						  		<td class="customerAddress">
+						  			<span th:text="${orders.customerAddress1}" class="customerAddress1"></span></br>
+						  			<span th:text="${orders.customerAddress2}" class="customerAddress2"></span>
+						  		</td>
+						  	</tr>
+						  	<tr>
+						  		<th scope="col" style="width: 20%;">Số điện thoại</th>
+						  		<td class="customerPhone">
+						  			<a th:href="@{|tel:${orders.customerPhone}|}" th:text="${orders.customerPhone}"></a>
+						  		</td>
+						  	</tr>
+						  	<tr>
+						  		<th scope="col" style="width: 20%;">Địa chỉ Email</th>
+						  		<td class="customerEmail">
+						  			<a th:href="@{|mailto:${orders.customerEmail}|}" th:text="${orders.customerEmail}"></a>
+						  		</td>
+						  	</tr>
+						  	<tr>
+						  		<th scope="col" style="width: 20%;">Lưu ý của khách</th>
+						  		<td th:text="${orders.note}" class="note"></td>
+						  	</tr>
+						  	<tr>
+						  		<th scope="col" style="width: 20%;">Phương thức thanh toán</th>
+						  		<td th:text="${orders.methodPay}" class="methodPay"></td>
+						  	</tr>
+						  	<tr>
+						  		<th scope="col" style="width: 20%;">Tổng số sản phẩm</th>
+						  		<td th:text="${orders.totalProduct}" class="totalProduct"></td>
+						  	</tr>
+						  	<tr>
+						  		<th scope="col" style="width: 20%;">Tổng giá tiền</th>
+						  		<td th:text="${orders.totalPrice}" class="totalPrice"></td>
+						  	</tr>
+						  	<tr>
+						  		<th scope="col" style="width: 20%;">Trạng thái</th>
+						  		<td th:if="${orders.status} != 3 and ${orders.status} != 4" class="status">
+						  			<span th:text="${orders.status}" class="statusHide" style="display: none;"></span>
+						  			<span class="statusError" style="color: red; display: none;">Chuyển trạng thái sai.</span><br>
+						  			<select th:field="${orders.status}" class="form-select" name="status" id="status" style="width: 50%; height: 40px;">
+										<option value="0">Cần xác nhận</option>
+										<option value="1">Đã xác nhận</option>
+										<option value="2">Đang giao hàng</option>
+										<option value="3">Thành công</option>
+										<option value="4">Huỷ</option>
+									</select>
+									<p style="margin-top: 15px;">Lưu ý: Ở trạng thái <b>Cần xác nhận</b>, hãy liên hệ với khách hàng để xác nhận đơn hàng.</p>
+									<p>Sau khi xác nhận xong, hãy chuyển trạng thái sang <b>Đã xác nhận</b>.</p>
+									<p>Sau khi chuẩn bị xong bưu kiện đơn hàng, hãy chuyển trạng thái sang <b>Đang giao hàng</b>. Ở trạng thái này, số lượng hàng trong kho sẽ bị trừ đi.</p>
+									<p>Sau khi nhận tiền xong, hãy chuyển trạng thái sang <b>Thành công</b>.</p>
+									<p>Nếu khách hàng không đồng ý, hãy chuyển trạng thái sang <b>Huỷ</b>.</p>
+						  		</td>
+						  		<td th:if="${orders.status} == 3" class="status">Thành công</td>
+						  		<td th:if="${orders.status} == 4" class="status">Đã huỷ</td>
+						  	</tr>
+						  </tbody>
+						</table>
+						<div th:if="${orders.status} != 3 and ${orders.status} != 4" class="admin__button_area">
+                            <button class="btn btn-primary add-blog-btn" value="Update" type="submit" style="float: right;">Cập nhật</button>
+                        </div>
+	    			</form>
+	    			
+					<p>Danh sách sản phẩm</p>
+					<table class="table table-bordered">
+					  <thead>
+					    <tr>
+					      <th scope="col" style="width: 5%;">#</th>
+					      <th scope="col" style="width: 55%;">Tên sản phẩm</th>
+					      <th scope="col" style="width: 20%;">Số lượng</th>
+					      <th scope="col" style="width: 20%;">Thành tiền</th>
+					    </tr>
+					  </thead>
+					  <tbody>
+					    <tr th:each="orderDetail,iterStat : ${orderDetailsForms}">
+					      <th th:text="${iterStat.count}" scope="row"></th>
+					      <td class="productName">
+					      	<a th:text="${orderDetail.product.productName}" th:href="@{|/product-details/${orderDetail.product.productCode}-${orderDetail.product.productId}|}"></a>
+					      </td>
+					      <td th:text="${orderDetail.quantity}" class="quantity"></td>
+					      <td th:text="${orderDetail.price}" class="price"></td>
+					    </tr>
+					    <tr th:if="${#lists.isEmpty(orderDetailsForms)}"><td colspan="4">Không có dữ liệu</td></tr>
+					  </tbody>
+					</table>
+	    		</div>
+	    	</div>
+	    </div>
+		
+		<!-- Js Plugins -->
+		<script src="../js/jquery-3.3.1.min.js"></script>
+		<script src="../js/bootstrap.min.js"></script>
+		<script src="../js/jquery-ui.min.js"></script>
+		<script>
+			$(document).ready(function() {
+				var status = $('.methodPay').html();
+				if(status == 1)
+					$(".methodPay").html("Chuyển khoản qua ngân hàng");
+				else if(status == 2)
+					$(".methodPay").html("Thanh toán khi nhận hàng (COD)");
+				
+				var price = $('.totalPrice').html();
+				$('.totalPrice').html(parseInt(price).toLocaleString("vi", {style:"currency", currency:"VND"}));
+				
+				$('.price').each(function () {
+					var price = $(this).html();
+					$(this).html(parseInt(price).toLocaleString("vi", {style:"currency", currency:"VND"}));
+			    });
+			    
+			    $('#status').change(function() {
+					$('.statusError').hide();
+				});
+			    
+			    $('.add-blog-btn').click(function() {
+					var statusHide = $('.statusHide').html();
+					console.log(statusHide);
+					
+					var statusSelected = $('#status').val();
+					console.log(statusSelected);
+					
+					if(statusSelected != 4) {
+						if(statusSelected == statusHide)
+							return false;
+						if(statusSelected - statusHide != 1) {
+							$('.statusError').show();
+							return false;
+						}
+					}
+				});
+			});
+		    
+		</script>
+	</body>
+</html>

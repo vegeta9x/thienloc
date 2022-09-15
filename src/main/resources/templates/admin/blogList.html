@@ -22,6 +22,24 @@
 		      	color: #007bff;
 		      	font-size: 16px;
 		    }
+		    .blog__pagination {
+				padding-top: 15px;
+			}
+			.blog__pagination:before {
+				top: -15px;
+			}
+			
+			.admin_page_navigation a.active_page {
+				background: #007bff;
+				border-color: #007bff;
+				color: #ffffff;
+			}
+			
+			.admin_page_navigation a:hover {
+				background: #007bff;
+				border-color: #007bff;
+				color: #ffffff;
+			}
 	    </style>
 	</head>
 	
@@ -49,11 +67,13 @@
 					    <tr>
 					      <th scope="col" style="width: 5%;">#</th>
 					      <th scope="col" style="width: 60%;">Tiêu đề</th>
-					      <th scope="col" style="width: 15%;">Xuất bản</th>
-					      <th scope="col" style="width: 20%;">Tác vụ</th>
+					      <th scope="col" style="width: 13%;">Xuất bản</th>
+					      <th scope="col" style="width: 22%;">Tác vụ</th>
 					    </tr>
 					  </thead>
-					  <tbody>
+					  <input type='hidden' id='current_page' value="0" />
+				      <input type='hidden' id='show_per_page' value="10" />
+					  <tbody id="content">
 					    <tr th:each="blog,iterStat : ${blogList}">
 					      <th th:text="${iterStat.count}" scope="row"></th>
 					      <td>
@@ -73,12 +93,20 @@
 					</table>
 	    		</div>
 	    	</div>
+	    	<div class="row">
+                <div class="col-lg-12">
+                    <div id="page_navigation" class="admin_page_navigation"></div>
+                </div>
+            </div>
 	    </div>
 		
 		<!-- Js Plugins -->
 		<script src="../js/jquery-3.3.1.min.js"></script>
 		<script src="../js/bootstrap.min.js"></script>
 		<script src="../js/jquery-ui.min.js"></script>
+		<script src="../js/page_navigation.js"></script>
+    	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
+    	
 		<script>
 			$(document).ready(function() {
 				$( ".display_code" ).each(function(index) {

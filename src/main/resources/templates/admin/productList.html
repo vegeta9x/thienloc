@@ -27,6 +27,23 @@
 				cursor: pointer;
     			display: inline;
 			}
+			.blog__pagination {
+				padding-top: 15px;
+			}
+			.blog__pagination:before {
+				top: -15px;
+			}
+			.admin_page_navigation a.active_page {
+				background: #007bff;
+				border-color: #007bff;
+				color: #ffffff;
+			}
+			
+			.admin_page_navigation a:hover {
+				background: #007bff;
+				border-color: #007bff;
+				color: #ffffff;
+			}
 	    </style>
 	</head>
 	
@@ -41,10 +58,10 @@
 		        		<h5>Danh mục</h5>
 		        		<ul class="main_categories__menu__dropdown" style="border: none; padding-left: 15px;">
                         	<th:block th:each="category : ${categoryList}">
-	                           	<li th:if="${category.categoryType} == 1"><a th:href="@{|/category/${category.categoryCode}-${category.categoryId}|}"><th:block th:text="${category.categoryName}" /></a> <i class="fa fa-angle-right"></i>
+	                           	<li th:if="${category.categoryType} == 1"><a th:href="@{|/admin/productList/${category.categoryCode}-${category.categoryId}|}"><th:block th:text="${category.categoryName}" /></a> <i class="fa fa-angle-right"></i>
 	                                <ul class="children_categories__menu__dropdown" style="display: none;" >
 	                                	<th:block th:each="categorySub : ${categoryList}" th:if="${categorySub.categoryParentId} == ${category.categoryId}">
-		                                    <li><a th:href="@{|/category/${categorySub.categoryCode}-${categorySub.categoryId}|}"><th:block th:text="${categorySub.categoryName}" /></a></li>
+		                                    <li><a th:href="@{|/admin/productList/${categorySub.categoryCode}-${categorySub.categoryId}|}"><th:block th:text="${categorySub.categoryName}" /></a></li>
 	                                	</th:block>
 	                                </ul>
 	                            </li>
@@ -64,7 +81,12 @@
 	    		<div class="col-lg-10">
 	    			<div class="info__admin__blogList" style="margin-bottom: 10px;">
 		    			<div class="filter__found" style="text-align: left; display: inline-block;">
-	                        <h6><span th:text="${productList.size()}"></span> sản phẩm</h6>
+		    				<th:block th:if="!${#lists.isEmpty(productList)}">
+		    					<h6><span  th:text="${productList.size()}"></span> sản phẩm</h6>
+		    				</th:block>
+	                        <th:block th:if="${#lists.isEmpty(productList)}">
+		    					<h6><span>0</span> sản phẩm</h6>
+		    				</th:block>
 	                    </div>
 	                    <a th:href="@{/admin/product}" style="float: right;">Tạo sản phẩm mới</a>
 	    			</div>
@@ -75,6 +97,7 @@
 							    <li><a th:href="@{|?order_by=price&sort_by=ASC|}">Giá tăng dần</a></li>
 							    <li><a th:href="@{|?order_by=price&sort_by=DESC|}">Giá giảm dần</a></li>
 							    <li><a th:href="@{|?order_by=date&sort_by=DESC|}">Mới nhất</a></li>
+							    <li><a th:href="@{|?order_by=quantity&sort_by=ASC|}">Số lượng</a></li>
 						  	</ul>
 						</div>
 	    			</div>
@@ -91,10 +114,14 @@
 					      <th scope="col" style="width: 22%;">Tác vụ</th>
 					    </tr>
 					  </thead>
-					  <tbody>
+					  <input type='hidden' id='current_page' value="0" />
+				      <input type='hidden' id='show_per_page' value="15" />
+					  <tbody id="content">
 					    <tr th:each="product,iterStat : ${productList}">
 					      <th th:text="${iterStat.count}" scope="row">1</th>
-					      <td th:text="${product.productName}" class="productName"></td>
+					      <td class="productName">
+					      	<p th:text="${product.productName}"></p>
+					      </td>
 					      <td th:text="|${product.categoryParentName} / ${product.categoryName}|" class="categoryName"></td>
 					      <td>
 					      	<span th:text="${product.price}" class="price"></span>
@@ -108,17 +135,26 @@
 					      	<a th:href="@{|/admin/deleteProduct?productId=${product.productId}|}" class="delete"><i class="fa fa-trash"></i> xoá</a>
 					      </td>
 					    </tr>
-					    <tr th:if="${#lists.isEmpty(productList)}"><td colspan="6">Không có dữ liệu</td></tr>
+					    <tr th:if="${#lists.isEmpty(productList)}"><td colspan="7">Không có sản phẩm nào</td></tr>
 					  </tbody>
 					</table>
 	    		</div>
 	    	</div>
+	    	<div class="row">
+	    		<div class="col-2">
+	        	</div>
+                <div class="col-lg-10">
+                    <div id="page_navigation" class="admin_page_navigation"></div>
+                </div>
+            </div>
 	    </div>
 		
 		<!-- Js Plugins -->
 		<script src="../../js/bootstrap.min.js"></script>
 		<script src="../../js/jquery-3.3.1.min.js"></script>
 		<script src="../../js/jquery-ui.min.js"></script>
+		<script src="../../js/page_navigation.js"></script>
+    	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
 		
 		<script>
 			$(document).ready(function() {
@@ -129,8 +165,14 @@
 					$('#dropdownMenu1').html('Giá giảm dần');
 				else if(pageURL == '?order_by=date&sort_by=DESC')
 					$('#dropdownMenu1').html('Mới nhất');
+				else if(pageURL == '?order_by=quantity&sort_by=ASC')
+					$('#dropdownMenu1').html('Số lượng');
 				
                 $( "table tbody tr" ).each(function(index) {
+					if($(this).find(".quantity").text() < 6) {
+						$(".quantity").eq(index).css("color", "red").css("font-weight", "700");
+					}
+	
 					if($(this).find(".display").text() == 1)
 						$(".display").eq(index).html("Có");
 					else

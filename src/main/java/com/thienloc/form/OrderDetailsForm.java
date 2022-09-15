@@ -1,15 +1,17 @@
 package com.thienloc.form;
 
-public class OrderDetail {
-	private Long productId;
+import com.thienloc.model.Product;
+
+public class OrderDetailsForm {
+	private Product product;
 	private Integer quantity;
 	private Long price;
 	
-	public Long getProductId() {
-		return productId;
+	public Product getProduct() {
+		return product;
 	}
-	public void setProductId(Long productId) {
-		this.productId = productId;
+	public void setProduct(Product product) {
+		this.product = product;
 	}
 	public Integer getQuantity() {
 		return quantity;
@@ -17,13 +19,11 @@ public class OrderDetail {
 	public void setQuantity(Integer quantity) {
 		this.quantity = quantity;
 	}
-	
-	public OrderDetail() {
-	}
 	public Long getPrice() {
 		return price;
 	}
 	public void setPrice(Long price) {
 		this.price = price;
 	}
+	
 }

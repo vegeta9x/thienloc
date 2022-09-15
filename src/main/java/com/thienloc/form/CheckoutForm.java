@@ -6,12 +6,14 @@ public class CheckoutForm {
 	private Long totalPrice;
 	private Integer totalProduct;
 	private String custommerName;
-	private String customerAddress;
+	private String customerAddress_1;
+	private String customerAddress_2;
 	private String customerEmail;
 	private String customerPhone;
 	private String note;
 	private Integer methodPay;
-	private List<OrderDetail> orderDetails;
+	//private List<OrderDetail> orderDetails;
+	
 	public Long getTotalPrice() {
 		return totalPrice;
 	}
@@ -29,12 +31,6 @@ public class CheckoutForm {
 	}
 	public void setCustommerName(String custommerName) {
 		this.custommerName = custommerName;
-	}
-	public String getCustomerAddress() {
-		return customerAddress;
-	}
-	public void setCustomerAddress(String customerAddress) {
-		this.customerAddress = customerAddress;
 	}
 	public String getCustomerEmail() {
 		return customerEmail;
@@ -60,11 +56,22 @@ public class CheckoutForm {
 	public void setMethodPay(Integer methodPay) {
 		this.methodPay = methodPay;
 	}
-	public List<OrderDetail> getOrderDetails() {
-		return orderDetails;
+	public String getCustomerAddress_1() {
+		return customerAddress_1;
 	}
-	public void setOrderDetails(List<OrderDetail> orderDetails) {
-		this.orderDetails = orderDetails;
+	public void setCustomerAddress_1(String customerAddress_1) {
+		this.customerAddress_1 = customerAddress_1;
 	}
+	public String getCustomerAddress_2() {
+		return customerAddress_2;
+	}
+	public void setCustomerAddress_2(String customerAddress_2) {
+		this.customerAddress_2 = customerAddress_2;
+	}
+	/*
+	 * public List<OrderDetail> getOrderDetails() { return orderDetails; } public
+	 * void setOrderDetails(List<OrderDetail> orderDetails) { this.orderDetails =
+	 * orderDetails; }
+	 */
 	
 }

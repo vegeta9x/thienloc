@@ -1,23 +1,17 @@
 $(document).ready(function() {
-	var pageURL = window.location.pathname;
-	if(pageURL.search("blog") > 0) {
-		var show_per_page = 8;
-	} else
-		var show_per_page = 12;
+	var show_per_page = $('#show_per_page').val();
   	
     var number_of_items = $('#content').children().size();
     var number_of_pages = Math.ceil(number_of_items/show_per_page);
 
-    $('#current_page').val(0);
-    $('#show_per_page').val(show_per_page);
-
     var navigation_html = '<a class="previous_link" href="javascript:previous();">«</a>';
 
     var current_link = 0;
-    while (number_of_pages > current_link){
+	while (number_of_pages > current_link){
         navigation_html += '<a class="page_link" href="javascript:go_to_page(' + current_link +')" longdesc="' + current_link +'">'+ (current_link + 1) +'</a>';
         current_link++;
     }
+    
     navigation_html += '<a class="next_link" href="javascript:next();">»</a>';
 
     $('#page_navigation').html(navigation_html);
@@ -26,7 +20,8 @@ $(document).ready(function() {
 
     $('#content').children().css('display', 'none');
 
-    $('#content').children().slice(0, show_per_page).css('display', 'block');
+    $('#content').children().slice(0, show_per_page).show();
+    
 });
 
 function previous(){
@@ -47,7 +42,7 @@ function go_to_page(page_num){
     start_from = page_num * show_per_page;
     end_on = start_from + show_per_page;
 
-    $('#content').children().css('display', 'none').slice(start_from, end_on).css('display', 'block');
+    $('#content').children().css('display', 'none').slice(start_from, end_on).show();
     $('.page_link[longdesc=' + page_num +']').addClass('active_page').siblings('.active_page').removeClass('active_page');
     $('#current_page').val(page_num);
 }

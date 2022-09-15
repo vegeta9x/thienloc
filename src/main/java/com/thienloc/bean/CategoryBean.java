@@ -21,13 +21,11 @@ import com.thienloc.model.Category;
 import com.thienloc.model.CategoryExample;
 import com.thienloc.model.Product;
 import com.thienloc.utils.RemoveVietnameseTones;
-import com.thienloc.utils.Upload;
 
 @Transactional
 @Repository
 public class CategoryBean {
 	private static final Logger LOGGER = LoggerFactory.getLogger(CategoryBean.class);
-	private static final String PATHNAME = "src/main/webapp/WEB-INF/images/category";
 	
 	@Autowired
 	CategoryMapper categoryMapper;

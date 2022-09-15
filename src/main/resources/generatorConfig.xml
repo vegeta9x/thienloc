@@ -29,7 +29,7 @@
     <!-- <table tableName="categories" domainObjectName="Categories" ></table>
     <table tableName="order_details" domainObjectName="OrderDetails" ></table>
     <table tableName="orders" domainObjectName="Orders" ></table> -->
-    <table tableName="order_detail" domainObjectName="OrderDetail" ></table>
+    <table tableName="images_banner" domainObjectName="ImagesBanner" ></table>
 
   </context>
 </generatorConfiguration>
