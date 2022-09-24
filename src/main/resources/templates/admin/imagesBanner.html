@@ -31,7 +31,7 @@
 	        <div class="row">
 		        <div class="col-12">
 		            <div class="section-title__admin">
-		                <p>Lưu ý: kích thước file không vượt quá 3Mb.</p>
+		                <p>Lưu ý: kích thước file không vượt quá 3000 kb.</p>
 		                <p>Lưu ý: kích thước file càng nặng thì trang web load càng lâu.</p>
 		            </div>
 		        </div>
@@ -53,25 +53,25 @@
 						  		<tr th:if="${ImagesBanner.imageType} == 1">
 							  		<td><img th:src="@{|../images/banner/${ImagesBanner.imageName}|}" ></td>
 							  		<td><p>Ảnh banner to</p></td>
-							  		<td><p th:text="${ImagesBanner.size}"></p><p><th:block th:text="${ImagesBanner.width}" /> x <th:block th:text="${ImagesBanner.height}" /></p></td>
+							  		<td><p><th:block th:text="${ImagesBanner.size}" /> kb</p><p><th:block th:text="${ImagesBanner.width}" /> x <th:block th:text="${ImagesBanner.height}" /></p></td>
 							  		<td><input th:field="${ImagesBannerForm.bannerFile}" type="file" class="form-control" ></td>
 							  	</tr>
 							  	<tr th:if="${ImagesBanner.imageType} == 2">
 							  		<td><img th:src="@{|../images/banner/${ImagesBanner.imageName}|}" ></td>
 							  		<td><p>Ảnh banner 1</p><p>banner 1 và banner 2 chiều dài x cao phải bằng nhau</p></td>
-							  		<td><p th:text="${ImagesBanner.size}"></p><p><th:block th:text="${ImagesBanner.width}" /> x <th:block th:text="${ImagesBanner.height}" /></p></td>
+							  		<td><p><th:block th:text="${ImagesBanner.size}" /> kb</p><p><th:block th:text="${ImagesBanner.width}" /> x <th:block th:text="${ImagesBanner.height}" /></p></td>
 							  		<td><input th:field="${ImagesBannerForm.bannerSub1File}" type="file" class="form-control" ></td>
 							  	</tr>
 							  	<tr th:if="${ImagesBanner.imageType} == 3">
 							  		<td><img th:src="@{|../images/banner/${ImagesBanner.imageName}|}" ></td>
 							  		<td><p>Ảnh banner 2</p><p>banner 1 và banner 2 chiều dài x cao phải bằng nhau</p></td>
-							  		<td><p th:text="${ImagesBanner.size}"></p><p><th:block th:text="${ImagesBanner.width}" /> x <th:block th:text="${ImagesBanner.height}" /></p></td>
+							  		<td><p><th:block th:text="${ImagesBanner.size}" /> kb</p><p><th:block th:text="${ImagesBanner.width}" /> x <th:block th:text="${ImagesBanner.height}" /></p></td>
 							  		<td><input th:field="${ImagesBannerForm.bannerSub2File}" type="file" class="form-control" ></td>
 							  	</tr>
 							  	<tr th:if="${ImagesBanner.imageType} == 5">
 							  		<td><img th:src="@{|../images/avatar/${ImagesBanner.imageName}|}" ></td>
 							  		<td><p>Ảnh avatar</p></td>
-							  		<td><p th:text="${ImagesBanner.size}"></p><p><th:block th:text="${ImagesBanner.width}" /> x <th:block th:text="${ImagesBanner.height}" /></p></td>
+							  		<td><p><th:block th:text="${ImagesBanner.size}" /> kb</p><p><th:block th:text="${ImagesBanner.width}" /> x <th:block th:text="${ImagesBanner.height}" /></p></td>
 							  		<td><input th:field="${ImagesBannerForm.avatarFile}" type="file" class="form-control" ></td>
 							  	</tr>
 						  	</th:block>

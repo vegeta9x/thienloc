@@ -4,41 +4,36 @@ import javax.sql.DataSource;
 
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.env.Environment;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
+import org.springframework.jdbc.datasource.DriverManagerDataSource;
 
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 
 @Configuration
 public class DataSourceConfig {
-	@Value("${db.datasource.driver-class-name}")
-	private String driverClassName;
-	
-	@Value("${db.datasource.url}")
-	private String urlDb;
-	
-	@Value("${db.datasource.username}")
-	private String userName;
-	
-	@Value("${db.datasource.password}")
-	private String password;
+	@Autowired
+    private Environment env;
 	
 	@Bean(name = "dataSource")
     public DataSource dataSource() {
-		HikariConfig hikariConfig =new HikariConfig();
-		hikariConfig.setJdbcUrl(urlDb);
-		hikariConfig.setDriverClassName(driverClassName);
-		hikariConfig.setUsername(userName);
-		hikariConfig.setPassword(password);
-		
-		HikariDataSource hikariDataSource = new HikariDataSource(hikariConfig);
-		
-		return hikariDataSource; 
+		DriverManagerDataSource dataSource = new DriverManagerDataSource();
+
+        dataSource.setDriverClassName(env.getProperty("spring.datasource.driver-class-name"));
+        dataSource.setUrl(env.getProperty("spring.datasource.url"));
+        dataSource.setUsername(env.getProperty("spring.datasource.username"));
+        dataSource.setPassword(env.getProperty("spring.datasource.password"));
+
+        System.out.println("## getDataSource: " + dataSource);
+
+        return dataSource;
 	}
 	
 	@Bean(name = "transactionManager")

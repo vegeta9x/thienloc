@@ -8,9 +8,9 @@
 
   <context id="DB2Tables" targetRuntime="MyBatis3">
     <jdbcConnection driverClass="org.postgresql.Driver"
-        connectionURL="jdbc:postgresql://localhost:5432/postgres"
-        userId="postgres"
-        password="test">
+        connectionURL="jdbc:postgresql://localhost:5432/thienloc"
+        userId="thienloc"
+        password="longdepchai">
     </jdbcConnection>
 
     <javaTypeResolver >
@@ -29,7 +29,7 @@
     <!-- <table tableName="categories" domainObjectName="Categories" ></table>
     <table tableName="order_details" domainObjectName="OrderDetails" ></table>
     <table tableName="orders" domainObjectName="Orders" ></table> -->
-    <table tableName="images_banner" domainObjectName="ImagesBanner" ></table>
+    <table tableName="accounts" domainObjectName="Accounts" ></table>
 
   </context>
 </generatorConfiguration>
